@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizFlow DIGITAL | Web & Digital Solutions — Interactive Agency Platform</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans, Space Grotesk, Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        grotesk: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#030712',
+                            900: '#050B18',
+                            850: '#091224',
+                            800: '#0D1629',
+                            700: '#132240',
+                        },
+                        electric: {
+                            400: '#38BDF8',
+                            500: '#00E5FF',
+                        },
+                        neon: {
+                            500: '#0077FF',
+                            600: '#005CE6',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'shimmer': 'shimmer 3.5s linear infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% center' },
+                            '100%': { backgroundPosition: '200% center' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.8', filter: 'drop-shadow(0 0 8px rgba(0,229,255,0.45))' },
+                            '50%': { opacity: '1', filter: 'drop-shadow(0 0 20px rgba(0,229,255,0.9))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050B18;
+            color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphic Spotlight Card */
+        .spotlight-card {
+            position: relative;
+            background: linear-gradient(155deg, rgba(13, 22, 41, 0.84) 0%, rgba(5, 11, 24, 0.94) 100%);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(0, 229, 255, 0.16);
+            box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.8);
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                520px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(0, 229, 255, 0.13),
+                transparent 45%
+            );
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        .spotlight-card:hover {
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 18px 42px -12px rgba(0, 229, 255, 0.2);
+        }
+
+        /* Animated Gradient Border Badge */
+        .gradient-border-badge {
+            background: linear-gradient(#050B18, #050B18) padding-box,
+                        linear-gradient(90deg, #00E5FF, #0077FF, #00E5FF) border-box;
+            background-size: 200% auto;
+            border: 1px solid transparent;
+            animation: shimmer 4s linear infinite;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 32px rgba(0, 229, 255, 0.45);
+        }
+
+        .btn-electric {
+            background: linear-gradient(135deg, #00E5FF 0%, #0077FF 100%);
+            box-shadow: 0 0 24px rgba(0, 229, 255, 0.35);
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .btn-electric:hover {
+            box-shadow: 0 0 36px rgba(0, 229, 255, 0.65);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            box-shadow: 0 0 24px rgba(16, 185, 129, 0.35);
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .btn-whatsapp:hover {
+            box-shadow: 0 0 36px rgba(16, 185, 129, 0.65);
+            transform: translateY(-2px);
+        }
+
+        /* Subpage Transition */
+        .view-section {
+            display: none;
+            animation: viewFadeIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .view-section.active-view {
+            display: block;
+        }
+
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animated SVG Chart Line */
+        .chart-line-animated {
+            stroke-dasharray: 420;
+            stroke-dashoffset: 420;
+            animation: drawLine 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Print Media Query for POS / A4 Invoice Sandbox */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-invoice-area, #printable-invoice-area * {
+                visibility: visible;
+            }
+            #printable-invoice-area {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: #FFFFFF !important;
+                color: #0F172A !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #050B18; }
+        ::-webkit-scrollbar-thumb { background: #132240; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
+    
+/* ===== PREMIUM MOTION & POLISH LAYER ===== */
+html{scroll-padding-top:90px}
+body{background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(0,119,255,.16),transparent 60%)}
+#scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,#00E5FF,#0077FF,#A855F7);box-shadow:0 0 14px rgba(0,229,255,.8)}
+#cursor-glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;left:0;top:0;background:radial-gradient(circle,rgba(0,229,255,.10),transparent 65%);transform:translate(-50%,-50%);transition:opacity .3s}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;border-radius:50%;filter:blur(110px);opacity:.28;animation:drift 22s ease-in-out infinite alternate}
+.aurora i:nth-child(1){width:46vw;height:46vw;background:#0077FF;top:-12%;left:-10%}
+.aurora i:nth-child(2){width:38vw;height:38vw;background:#00E5FF;top:35%;right:-12%;animation-delay:-7s}
+.aurora i:nth-child(3){width:34vw;height:34vw;background:#7C3AED;bottom:-14%;left:30%;animation-delay:-13s;opacity:.2}
+@keyframes drift{to{transform:translate(8vw,6vh) scale(1.2) rotate(40deg)}}
+header.sticky{transition:height .3s,background .3s,box-shadow .3s}
+header.scrolled{background:rgba(5,11,24,.92)!important;box-shadow:0 10px 40px -12px rgba(0,229,255,.25)}
+h1,h2{letter-spacing:-.02em}
+h1,h2.font-grotesk{background:linear-gradient(100deg,#fff 0%,#bfeaff 35%,#00E5FF 55%,#fff 75%);background-size:250% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 7s linear infinite}
+h1 span,h1 em{-webkit-text-fill-color:initial}
+section>div>.reveal span.uppercase{position:relative;display:inline-block;padding:.35rem .9rem;border-radius:999px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.25)}
+.reveal{filter:blur(6px);transform:translateY(34px) scale(.97)}
+.reveal.is-visible{filter:blur(0);transform:none}
+.spotlight-card{transform-style:preserve-3d;will-change:transform}
+.spotlight-card::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--ang,0deg),transparent 0 60%,#00E5FF 80%,#0077FF 90%,transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s;pointer-events:none;animation:spinAng 4s linear infinite}
+.spotlight-card:hover::after{opacity:1}
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes spinAng{to{--ang:360deg}}
+.spotlight-card:hover{box-shadow:0 26px 60px -14px rgba(0,229,255,.28),0 0 0 1px rgba(0,229,255,.2)}
+.btn-electric,.btn-whatsapp,button.bg-electric-500,a.bg-electric-500{position:relative;overflow:hidden}
+.btn-electric::after,.btn-whatsapp::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);transition:left .7s}
+.btn-electric:hover::after,.btn-whatsapp:hover::after{left:140%}
+.btn-electric,.btn-whatsapp{animation:btnPulse 3.2s ease-in-out infinite}
+@keyframes btnPulse{50%{box-shadow:0 0 42px rgba(0,229,255,.6)}}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);transform:scale(0);animation:rip .6s ease-out;pointer-events:none}
+@keyframes rip{to{transform:scale(3.2);opacity:0}}
+.faq-answer{animation:viewFadeIn .35s ease both}
+img,svg{transition:transform .4s cubic-bezier(.22,1,.36,1)}
+section [class*="rounded-xl"][class*="w-1"],section [class*="rounded-xl"][class*="w-4"]{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.spotlight-card:hover [class*="rounded-xl"][class*="w-1"]{transform:translateY(-4px) rotate(-6deg) scale(1.1)}
+::selection{background:#00E5FF;color:#030712}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{filter:none}}
+@media(hover:none){#cursor-glow{display:none}}
+
+    </style>
+</head>
+<body class="antialiased selection:bg-electric-500 selection:text-navy-950">
+
+    <!-- Interactive Constellation Particle Canvas -->
+    <canvas id="constellation-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+    <!-- Ambient Radial Glow Orbs -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-48 -left-48 w-[540px] h-[540px] bg-electric-500/10 rounded-full blur-[130px]"></div>
+        <div class="absolute top-1/3 -right-48 w-[580px] h-[580px] bg-neon-500/12 rounded-full blur-[140px]"></div>
+        <div class="absolute -bottom-48 left-1/4 w-[600px] h-[600px] bg-electric-500/10 rounded-full blur-[150px]"></div>
+    </div>
+
+    <!-- ==========================================
+         TOP UTILITY BAR (ALWAYS VISIBLE)
+    =========================================== -->
+    <div class="relative z-50 bg-navy-950/95 border-b border-electric-500/15 text-xs text-slate-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+                <a href="mailto:gishankweerasinghe@gmail.com" class="inline-flex items-center gap-1.5 hover:text-electric-500 transition-colors">
+                    <i data-lucide="mail" class="w-3.5 h-3.5 text-electric-500"></i>
+                    <span>gishankweerasinghe@gmail.com</span>
+                </a>
+                <a href="tel:+94777693160" class="inline-flex items-center gap-1.5 hover:text-electric-500 transition-colors">
+                    <i data-lucide="phone" class="w-3.5 h-3.5 text-electric-500"></i>
+                    <span>077 769 3160</span>
+                </a>
+                <span class="hidden lg:inline-flex items-center gap-1.5 text-slate-400">
+                    <i data-lucide="globe" class="w-3.5 h-3.5 text-electric-500"></i>
+                    <span>www.bizflowdigital.work.gd </span>
+                </span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://wa.me/94777693160?text=Hi%20BizFlow%20DIGITAL%2C%20I%20would%20like%20to%20discuss%20a%20digital%20project." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>WhatsApp Live: 077 769 3160</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         STICKY GLASS HEADER & SPA ROUTER NAVIGATION
+    =========================================== -->
+    <header class="sticky top-0 z-40 w-full bg-navy-900/85 backdrop-blur-xl border-b border-electric-500/15">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand Emblem (Click returns to #home) -->
+                <button type="button" onclick="navigateTo('home')" class="flex items-center gap-3.5 group focus:outline-none text-left">
+                    <div class="relative w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0">
+                        <div class="absolute -inset-1 rounded-full border border-dashed border-electric-500/40 animate-spin-slow"></div>
+                        <svg viewBox="0 0 120 120" class="w-full h-full animate-pulse-glow group-hover:scale-105 transition-transform duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="bfRingGrad" x1="12" y1="12" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#00E5FF"/>
+                                    <stop offset="50%" stop-color="#0077FF"/>
+                                    <stop offset="100%" stop-color="#1E3A8A"/>
+                                </linearGradient>
+                                <linearGradient id="bfArrowGrad" x1="22" y1="94" x2="100" y2="20" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#1D4ED8"/>
+                                    <stop offset="55%" stop-color="#00E5FF"/>
+                                    <stop offset="100%" stop-color="#CFFAFE"/>
+                                </linearGradient>
+                                <linearGradient id="bfLetterGrad" x1="35" y1="25" x2="78" y2="95" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0%" stop-color="#38BDF8"/>
+                                    <stop offset="100%" stop-color="#1E40AF"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M88 26C79 18 67 14 55 15C30 17 12 39 15 64C16 74 21 83 28 89" stroke="url(#bfRingGrad)" stroke-width="9" stroke-linecap="round"/>
+                            <path d="M35 97C45 103 57 106 69 104C93 100 109 77 104 53C102 45 99 39 94 33" stroke="url(#bfRingGrad)" stroke-width="9" stroke-linecap="round"/>
+                            <path d="M42 32H65C71 32 75 36 75 41C75 46 71 49 66 50H48V88" stroke="url(#bfLetterGrad)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M48 64H76" stroke="#00E5FF" stroke-width="7.5" stroke-linecap="round"/>
+                            <path d="M71 57L80 64L71 71" stroke="#00E5FF" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M26 89C44 74 66 54 91 29" stroke="url(#bfArrowGrad)" stroke-width="9.5" stroke-linecap="round"/>
+                            <path d="M73 25L96 24L93 47L73 25Z" fill="#67E8F9"/>
+                            <path d="M36 93L20 96L24 80L36 93Z" fill="#1E3A8A"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="font-grotesk font-bold text-xl sm:text-2xl tracking-tight text-white">BizFlow</span>
+                        <span class="font-display font-bold text-[10px] sm:text-[11px] tracking-[0.3em] text-electric-500 mt-1">DIGITAL</span>
+                    </div>
+                </button>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-6">
+                    <button type="button" onclick="navigateTo('home')" data-nav="home" class="nav-link text-sm font-semibold text-electric-500 transition-colors">Home</button>
+                    <button type="button" onclick="jumpToHomeSection('services')" class="text-sm font-medium text-slate-300 hover:text-electric-500 transition-colors">Solutions</button>
+                    
+                    <!-- Interactive Subpages Dropdown -->
+                    <div class="relative group">
+                        <button type="button" class="text-sm font-semibold text-slate-200 hover:text-electric-500 transition-colors inline-flex items-center gap-1.5 py-2">
+                            <span class="w-2 h-2 rounded-full bg-electric-500 animate-pulse"></span>
+                            <span>Interactive Subpages</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-electric-500 group-hover:rotate-180 transition-transform"></i>
+                        </button>
+                        <div class="absolute left-0 top-full pt-2 w-80 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="bg-navy-800/95 backdrop-blur-2xl border border-electric-500/30 rounded-2xl p-2.5 shadow-2xl space-y-1">
+                                <button type="button" onclick="navigateTo('subpage-websites')" class="w-full text-left p-3 rounded-xl hover:bg-navy-700/80 transition-colors flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-electric-500/15 text-electric-500 flex items-center justify-center shrink-0 mt-0.5">
+                                        <i data-lucide="layout-template" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-display font-bold text-xs text-white">Company Websites Studio</div>
+                                        <div class="text-[11px] text-slate-400">Live 3-industry template &amp; theme builder</div>
+                                    </div>
+                                </button>
+                                <button type="button" onclick="navigateTo('subpage-inventory')" class="w-full text-left p-3 rounded-xl hover:bg-navy-700/80 transition-colors flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                                        <i data-lucide="boxes" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-display font-bold text-xs text-white">Inventory &amp; Stock System</div>
+                                        <div class="text-[11px] text-slate-400">Live SKU tracker, low-stock alerts &amp; audit log</div>
+                                    </div>
+                                </button>
+                                <button type="button" onclick="navigateTo('subpage-billing')" class="w-full text-left p-3 rounded-xl hover:bg-navy-700/80 transition-colors flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-purple-500/15 text-purple-400 flex items-center justify-center shrink-0 mt-0.5">
+                                        <i data-lucide="receipt" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-display font-bold text-xs text-white">POS Billing &amp; Invoice Suite</div>
+                                        <div class="text-[11px] text-slate-400">A4 tax invoice &amp; 80mm thermal receipt generator</div>
+                                    </div>
+                                </button>
+                                <button type="button" onclick="navigateTo('subpage-commerce')" class="w-full text-left p-3 rounded-xl hover:bg-navy-700/80 transition-colors flex items-start gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-display font-bold text-xs text-white">WhatsApp Store &amp; Bookings</div>
+                                        <div class="text-[11px] text-slate-400">0% commission cart &amp; appointment scheduler</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="jumpToHomeSection('contact-hub')" class="text-sm font-medium text-slate-300 hover:text-electric-500 transition-colors">Contact</button>
+                </nav>
+
+                <!-- Right Header CTA & Mobile Hamburger -->
+                <div class="flex items-center gap-3">
+                    <button type="button" onclick="jumpToHomeSection('contact-hub')" class="btn-electric text-navy-950 font-display font-extrabold text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-xl inline-flex items-center gap-2">
+                        <span>Get Quote</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </button>
+                    <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" class="lg:hidden p-2.5 rounded-xl bg-navy-800 border border-electric-500/25 text-slate-200 hover:text-electric-500">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-navy-900/98 backdrop-blur-2xl border-b border-electric-500/20 px-4 pt-3 pb-6 space-y-2">
+            <button type="button" onclick="navigateTo('home')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold text-electric-500 bg-navy-800/70">Home Overview</button>
+            <div class="px-4 pt-2 pb-1 text-[11px] font-grotesk font-bold uppercase tracking-wider text-slate-400">Interactive Subpage Demos</div>
+            <button type="button" onclick="navigateTo('subpage-websites')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-navy-800 flex items-center gap-2">
+                <i data-lucide="layout-template" class="w-4 h-4 text-electric-500"></i> Company Websites Studio
+            </button>
+            <button type="button" onclick="navigateTo('subpage-inventory')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-navy-800 flex items-center gap-2">
+                <i data-lucide="boxes" class="w-4 h-4 text-blue-400"></i> Inventory &amp; Stock System
+            </button>
+            <button type="button" onclick="navigateTo('subpage-billing')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-navy-800 flex items-center gap-2">
+                <i data-lucide="receipt" class="w-4 h-4 text-purple-400"></i> POS Billing &amp; Invoice Suite
+            </button>
+            <button type="button" onclick="navigateTo('subpage-commerce')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-navy-800 flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-4 h-4 text-emerald-400"></i> WhatsApp Store &amp; Bookings
+            </button>
+            <div class="border-t border-slate-800 my-2"></div>
+            <button type="button" onclick="jumpToHomeSection('services')" class="w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-slate-300">All 8 Solutions</button>
+            <button type="button" onclick="jumpToHomeSection('contact-hub')" class="w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-slate-300">Contact &amp; Estimator</button>
+        </div>
+    </header>
+
+    <!-- Quick Subpage Switcher Bar (Always Accessible) -->
+    <div class="relative z-30 bg-navy-850/90 border-b border-electric-500/15 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span class="text-[11px] font-grotesk font-bold uppercase tracking-wider text-slate-400 shrink-0 mr-1">Views:</span>
+            <button type="button" onclick="navigateTo('home')" data-pill="home" class="subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-electric-500 text-navy-950">
+                Agency Home
+            </button>
+            <button type="button" onclick="navigateTo('subpage-websites')" data-pill="subpage-websites" class="subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all bg-navy-800 text-slate-300 border border-electric-500/20 hover:border-electric-500 inline-flex items-center gap-1.5">
+                <i data-lucide="layout-template" class="w-3.5 h-3.5 text-electric-500"></i> Company Websites
+            </button>
+            <button type="button" onclick="navigateTo('subpage-inventory')" data-pill="subpage-inventory" class="subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all bg-navy-800 text-slate-300 border border-electric-500/20 hover:border-electric-500 inline-flex items-center gap-1.5">
+                <i data-lucide="boxes" class="w-3.5 h-3.5 text-blue-400"></i> Inventory System
+            </button>
+            <button type="button" onclick="navigateTo('subpage-billing')" data-pill="subpage-billing" class="subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all bg-navy-800 text-slate-300 border border-electric-500/20 hover:border-electric-500 inline-flex items-center gap-1.5">
+                <i data-lucide="receipt" class="w-3.5 h-3.5 text-purple-400"></i> POS Billing &amp; Invoices
+            </button>
+            <button type="button" onclick="navigateTo('subpage-commerce')" data-pill="subpage-commerce" class="subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all bg-navy-800 text-slate-300 border border-electric-500/20 hover:border-electric-500 inline-flex items-center gap-1.5">
+                <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-emerald-400"></i> WhatsApp Store &amp; Bookings
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         VIEW 1: MAIN AGENCY LANDING PAGE (#home)
+    ========================================================================== -->
+    <main id="view-home" class="view-section active-view relative z-10">
+        
+        <!-- HERO SECTION -->
+        <section class="pt-12 pb-20 lg:pt-20 lg:pb-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Hero Left -->
+                    <div class="lg:col-span-7 text-center lg:text-left space-y-7 reveal">
+                        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full gradient-border-badge shadow-[0_0_24px_rgba(0,229,255,0.18)]">
+                            <span class="w-2 h-2 rounded-full bg-electric-500 animate-ping"></span>
+                            <span class="text-xs sm:text-sm font-grotesk font-bold tracking-wider text-electric-400 uppercase">
+                                Web Portals • Inventory &amp; POS • WhatsApp Commerce
+                            </span>
+                        </div>
+
+                        <h1 class="font-grotesk font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08] text-white">
+                            ACCELERATE YOUR <br class="hidden sm:inline">
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-electric-500 via-cyan-300 to-neon-500 text-glow">
+                                DIGITAL GROWTH
+                            </span>
+                        </h1>
+
+                        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            BizFlow DIGITAL designs and engineers high-converting company websites, cloud inventory management systems, POS billing &amp; invoice generators, and zero-commission WhatsApp order storefronts.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-1">
+                            <a href="https://wa.me/94777693160?text=Hello%20BizFlow%20DIGITAL!%20I%20want%20to%20build%20a%20digital%20solution%20for%20my%20business." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto btn-whatsapp text-navy-950 font-display font-extrabold text-sm sm:text-base px-7 py-4 rounded-2xl inline-flex items-center justify-center gap-2.5">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                <span>Chat on WhatsApp (077 769 3160)</span>
+                            </a>
+                            <button type="button" onclick="navigateTo('subpage-websites')" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-navy-800/90 hover:bg-navy-700 border border-electric-500/35 hover:border-electric-500 text-white font-display font-bold text-sm sm:text-base inline-flex items-center justify-center gap-2 transition-all">
+                                <i data-lucide="play-circle" class="w-5 h-5 text-electric-500"></i>
+                                <span>Launch Live Sandboxes</span>
+                            </button>
+                        </div>
+
+                        <!-- KPI Metrics -->
+                        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80 max-w-xl mx-auto lg:mx-0">
+                            <div>
+                                <div class="font-grotesk font-bold text-2xl sm:text-3xl text-white">
+                                    <span class="counter" data-target="48">0</span>h
+                                </div>
+                                <div class="text-xs text-slate-400 mt-0.5">Prototype Turnaround</div>
+                            </div>
+                            <div>
+                                <div class="font-grotesk font-bold text-2xl sm:text-3xl text-electric-500">
+                                    <span class="counter" data-target="8">0</span>+
+                                </div>
+                                <div class="text-xs text-slate-400 mt-0.5">Core Digital Systems</div>
+                            </div>
+                            <div>
+                                <div class="font-grotesk font-bold text-2xl sm:text-3xl text-white">
+                                    <span class="counter" data-target="100">0</span>%
+                                </div>
+                                <div class="text-xs text-slate-400 mt-0.5">Custom Tailored</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Right: Interactive Command Center -->
+                    <div class="lg:col-span-5 relative reveal">
+                        <div class="relative mx-auto max-w-md lg:max-w-none animate-float">
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-electric-500/25 via-neon-500/20 to-emerald-500/15 rounded-3xl blur-2xl"></div>
+                            <div class="relative spotlight-card rounded-3xl p-5 sm:p-6 border border-electric-500/40">
+                                <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-800">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                        <span class="font-grotesk font-bold text-xs tracking-wider text-white uppercase">BizFlow Live Telemetry</span>
+                                    </div>
+                                    <div class="flex items-center gap-1 bg-navy-950 p-1 rounded-xl border border-slate-800">
+                                        <button type="button" onclick="switchHeroView('growth')" id="hero-btn-growth" class="hero-view-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-electric-500 text-navy-950 transition-all">Web</button>
+                                        <button type="button" onclick="switchHeroView('inventory')" id="hero-btn-inventory" class="hero-view-btn px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white transition-all">Stock</button>
+                                        <button type="button" onclick="switchHeroView('billing')" id="hero-btn-billing" class="hero-view-btn px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white transition-all">Billing</button>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div class="bg-navy-950/85 p-3.5 rounded-2xl border border-electric-500/20">
+                                        <div id="hero-kpi1-label" class="text-[11px] text-slate-400">Lead Conversion Lift</div>
+                                        <div id="hero-kpi1-val" class="font-grotesk font-bold text-xl text-white mt-0.5">+248.5%</div>
+                                        <div class="text-[11px] text-emerald-400 font-medium mt-1 flex items-center gap-1">
+                                            <i data-lucide="trending-up" class="w-3 h-3"></i> Active Sync
+                                        </div>
+                                    </div>
+                                    <div class="bg-navy-950/85 p-3.5 rounded-2xl border border-electric-500/20">
+                                        <div id="hero-kpi2-label" class="text-[11px] text-slate-400">WhatsApp Orders</div>
+                                        <div id="hero-kpi2-val" class="font-grotesk font-bold text-xl text-electric-500 mt-0.5">1,490 / mo</div>
+                                        <div class="text-[11px] text-cyan-300 font-medium mt-1">0% Commission</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-navy-950/90 rounded-2xl p-4 border border-electric-500/20 mb-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span id="hero-chart-title" class="text-xs font-semibold text-slate-300">Digital Pipeline Velocity</span>
+                                        <span class="text-[11px] font-mono text-electric-500">REALTIME</span>
+                                    </div>
+                                    <svg viewBox="0 0 320 105" class="w-full h-24 overflow-visible">
+                                        <defs>
+                                            <linearGradient id="splineAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.38"/>
+                                                <stop offset="100%" stop-color="#0077FF" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <line x1="0" y1="25" x2="320" y2="25" stroke="#1E293B" stroke-dasharray="3 3"/>
+                                        <line x1="0" y1="60" x2="320" y2="60" stroke="#1E293B" stroke-dasharray="3 3"/>
+                                        <line x1="0" y1="92" x2="320" y2="92" stroke="#1E293B" stroke-dasharray="3 3"/>
+                                        <path d="M10 88 C 55 84, 75 58, 115 62 C 155 66, 175 32, 215 29 C 255 26, 275 11, 308 7 L 308 96 L 10 96 Z" fill="url(#splineAreaGrad)"/>
+                                        <path class="chart-line-animated" d="M10 88 C 55 84, 75 58, 115 62 C 155 66, 175 32, 215 29 C 255 26, 275 11, 308 7" stroke="#00E5FF" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                                        <circle cx="308" cy="7" r="5" fill="#00E5FF"/>
+                                        <circle cx="308" cy="7" r="9" fill="#00E5FF" opacity="0.35" class="animate-ping"/>
+                                    </svg>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button type="button" onclick="navigateTo('subpage-inventory')" class="text-left bg-navy-950/90 hover:border-electric-500 border border-electric-500/20 rounded-xl p-2.5 transition-all">
+                                        <div class="text-[11px] font-bold text-electric-400 flex items-center justify-between">
+                                            <span>Stock Sandbox</span>
+                                            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 mt-0.5">Test live SKU tracker</div>
+                                    </button>
+                                    <button type="button" onclick="navigateTo('subpage-billing')" class="text-left bg-navy-950/90 hover:border-electric-500 border border-electric-500/20 rounded-xl p-2.5 transition-all">
+                                        <div class="text-[11px] font-bold text-purple-400 flex items-center justify-between">
+                                            <span>POS &amp; Invoice</span>
+                                            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 mt-0.5">Test A4 &amp; 80mm bills</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- DEDICATED INTERACTIVE SANDBOX SUBPAGE LAUNCHER GRID -->
+        <section class="py-16 bg-navy-850/75 border-y border-electric-500/15">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 reveal">
+                    <div>
+                        <span class="text-xs font-grotesk font-bold tracking-[0.22em] text-electric-500 uppercase">
+                            INTERACTIVE SUBPAGE LABS
+                        </span>
+                        <h2 class="font-grotesk font-bold text-2xl sm:text-4xl text-white mt-1.5">
+                            Experience Full Working Systems Before You Order
+                        </h2>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-400 max-w-md">
+                        Click any interactive lab below to launch a full-screen subpage sandbox with real data controls, live calculations, and printable previews.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Subpage Card 1: Company Websites -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between border-electric-500/30 reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-electric-500/15 text-electric-500 flex items-center justify-center">
+                                    <i data-lucide="layout-template" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-electric-500/15 text-electric-400 border border-electric-500/30">SUBPAGE 01</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2">Company Websites Studio</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-5">
+                                Switch between Corporate, Resort &amp; Real Estate templates, edit headlines live, toggle Dark/Light themes &amp; test responsive viewports.
+                            </p>
+                        </div>
+                        <button type="button" onclick="navigateTo('subpage-websites')" class="relative z-10 w-full btn-electric text-navy-950 font-display font-extrabold text-xs py-3 rounded-xl inline-flex items-center justify-center gap-2">
+                            <span>Open Website Builder Lab</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Subpage Card 2: Inventory Management -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between border-blue-500/30 reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center">
+                                    <i data-lucide="boxes" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30">SUBPAGE 02</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2">Inventory &amp; Stock System</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-5">
+                                Add new SKUs, adjust stock quantities in real time, monitor automated low-stock alerts, filter categories &amp; export CSV logs.
+                            </p>
+                        </div>
+                        <button type="button" onclick="navigateTo('subpage-inventory')" class="relative z-10 w-full bg-blue-600 hover:bg-blue-500 text-white font-display font-extrabold text-xs py-3 rounded-xl inline-flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(37,99,235,0.4)] transition-all">
+                            <span>Open Inventory Sandbox</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Subpage Card 3: POS Billing & Invoices -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between border-purple-500/30 reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center">
+                                    <i data-lucide="receipt" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30">SUBPAGE 03</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2">POS Billing &amp; Invoice Suite</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-5">
+                                Build itemized bills with tax &amp; discounts, toggle between A4 Tax Invoice and 80mm POS Thermal Receipt, print PDF or share on WhatsApp.
+                            </p>
+                        </div>
+                        <button type="button" onclick="navigateTo('subpage-billing')" class="relative z-10 w-full bg-purple-600 hover:bg-purple-500 text-white font-display font-extrabold text-xs py-3 rounded-xl inline-flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(147,51,234,0.4)] transition-all">
+                            <span>Open Billing &amp; POS Lab</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Subpage Card 4: WhatsApp Store & Bookings -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between border-emerald-500/30 reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center">
+                                    <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">SUBPAGE 04</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2">WhatsApp Store &amp; Bookings</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-5">
+                                Test a zero-commission WhatsApp mobile shopping cart with delivery checkout alongside an interactive 24/7 appointment scheduler.
+                            </p>
+                        </div>
+                        <button type="button" onclick="navigateTo('subpage-commerce')" class="relative z-10 w-full btn-whatsapp text-navy-950 font-display font-extrabold text-xs py-3 rounded-xl inline-flex items-center justify-center gap-2">
+                            <span>Open Commerce &amp; Booking Lab</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALL 8 CORE SERVICES GRID -->
+        <section id="services" class="py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <span class="text-xs sm:text-sm font-grotesk font-bold tracking-[0.24em] text-electric-500 uppercase">
+                        SERVICES WE CREATE
+                    </span>
+                    <h2 class="font-grotesk font-bold text-3xl sm:text-4xl lg:text-5xl text-white mt-3 tracking-tight">
+                        WEB &amp; DIGITAL SOLUTIONS
+                    </h2>
+                    <p class="text-slate-400 text-sm sm:text-base mt-4 leading-relaxed">
+                        Every solution is custom-engineered for speed, mobile responsiveness, and effortless daily operation—with direct subpage sandboxes available to test.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 1. Business & Informational Websites -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-electric-500/30 flex items-center justify-center text-electric-500 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="globe" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">3–6 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-electric-400 transition-colors">
+                                Business &amp; Informational Websites
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Authority-building corporate sites with SEO architecture, interactive service pages, Google Maps, and instant WhatsApp lead capture.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Custom UI/UX &amp; Mobile First</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> On-Page SEO &amp; SSL Security</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-websites')" class="w-full py-2 px-3 rounded-xl bg-electric-500/15 hover:bg-electric-500/25 text-electric-400 border border-electric-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Launch Website Sandbox
+                            </button>
+                            <button type="button" onclick="addToEstimator('Business & Informational Websites')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Professional Portfolios -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-electric-500/30 flex items-center justify-center text-electric-500 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="briefcase" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">3–5 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-electric-400 transition-colors">
+                                Professional Portfolios
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Interactive personal, creative, and agency showcases engineered to present case studies, media galleries, and client testimonials.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Filterable Project Galleries</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Direct Consultation Booking</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-websites')" class="w-full py-2 px-3 rounded-xl bg-electric-500/15 hover:bg-electric-500/25 text-electric-400 border border-electric-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Preview Portfolio Layouts
+                            </button>
+                            <button type="button" onclick="addToEstimator('Professional Portfolios')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Appointment & Booking Portals -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-electric-500/30 flex items-center justify-center text-electric-500 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">5–7 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-electric-400 transition-colors">
+                                Appointment &amp; Booking Portals
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                24/7 automated scheduling portals for clinics, salons, consultants, and studios with real-time slot locking and WhatsApp alerts.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Live Date &amp; Time Slot Matrix</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Instant Ticket Confirmation</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-commerce')" class="w-full py-2 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Launch Booking Sandbox
+                            </button>
+                            <button type="button" onclick="addToEstimator('Appointment & Booking Portals')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Real Estate & Vehicle Directories -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-electric-500/30 flex items-center justify-center text-electric-500 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="building-2" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">6–9 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-electric-400 transition-colors">
+                                Real Estate &amp; Vehicle Directories
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                High-speed listing directories with multi-criteria filtering (location, price, specs), photo sliders, and 1-tap agent inquiries.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Smart Search &amp; Price Filters</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Easy Listing Admin Panel</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-websites')" class="w-full py-2 px-3 rounded-xl bg-electric-500/15 hover:bg-electric-500/25 text-electric-400 border border-electric-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Preview Directory Template
+                            </button>
+                            <button type="button" onclick="addToEstimator('Real Estate & Vehicle Directories')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 5. Staff & Inventory Portals -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="boxes" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">7–10 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-blue-400 transition-colors">
+                                Staff &amp; Inventory Portals
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Real-time warehouse and retail inventory control with SKU valuation, low-stock threshold alerts, and staff movement logs.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> Live Stock In/Out &amp; Valuation</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-blue-400"></i> Automated Reorder Alerts</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-inventory')" class="w-full py-2 px-3 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 text-blue-300 border border-blue-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Launch Inventory Sandbox
+                            </button>
+                            <button type="button" onclick="addToEstimator('Staff & Inventory Portals')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 6. Quotation & Invoice Generators -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="receipt" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">4–6 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-purple-400 transition-colors">
+                                Quotation &amp; Invoice Generators
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Fast POS billing and A4 tax invoice systems with automated VAT/discount math, printable receipts, and WhatsApp bill sharing.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> A4 PDF &amp; 80mm Thermal Modes</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> 1-Click WhatsApp Invoice Send</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-billing')" class="w-full py-2 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Launch POS Billing Sandbox
+                            </button>
+                            <button type="button" onclick="addToEstimator('Quotation & Invoice Generators')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 7. WhatsApp Order Catalogs -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">3–5 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                                WhatsApp Order Catalogs
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Mobile-optimized e-commerce storefronts where customers browse products, build carts, and send structured orders to WhatsApp.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Zero Platform Commissions</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Formatted Order Summaries</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <button type="button" onclick="navigateTo('subpage-commerce')" class="w-full py-2 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="play" class="w-3.5 h-3.5"></i> Launch Storefront Sandbox
+                            </button>
+                            <button type="button" onclick="addToEstimator('WhatsApp Order Catalogs')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 8. Digital Business Cards & Event Sites -->
+                    <div class="spotlight-card rounded-2xl p-6 flex flex-col justify-between group reveal">
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-12 h-12 rounded-2xl bg-navy-950 border border-electric-500/30 flex items-center justify-center text-electric-500 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="qr-code" class="w-6 h-6"></i>
+                                </div>
+                                <span class="text-[11px] font-mono text-slate-400">2–3 Days</span>
+                            </div>
+                            <h3 class="font-display font-bold text-lg text-white mb-2 group-hover:text-electric-400 transition-colors">
+                                Digital Business Cards &amp; Event Sites
+                            </h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Smart NFC/QR vCard profiles with 1-tap phonebook saving, plus countdown RSVP microsites for launches, weddings, and summits.
+                            </p>
+                            <ul class="space-y-1.5 text-[11px] text-slate-400 mb-5">
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> 1-Tap Save Contact (.vcf)</li>
+                                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-electric-500"></i> Custom QR Code &amp; Analytics</li>
+                            </ul>
+                        </div>
+                        <div class="relative z-10 pt-4 border-t border-slate-800/80 space-y-2">
+                            <a href="https://wa.me/94777693160?text=Hi%20BizFlow%20DIGITAL%2C%20I%20would%20like%20a%20Digital%20Business%20Card%20%2F%20Event%20Site." target="_blank" rel="noopener noreferrer" class="w-full py-2 px-3 rounded-xl bg-electric-500/15 hover:bg-electric-500/25 text-electric-400 border border-electric-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Order via WhatsApp
+                            </a>
+                            <button type="button" onclick="addToEstimator('Digital Business Cards & Event Sites')" class="w-full py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+                                + Add to Quote Estimator
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4-STEP WORKFLOW & TECH STACK -->
+        <section id="process" class="py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+
+                <!-- FAQ Accordion -->
+                <div class="max-w-3xl mx-auto reveal">
+                    <h3 class="font-grotesk font-bold text-2xl text-white text-center mb-8">Frequently Asked Questions</h3>
+                    <div class="space-y-3" id="faq-container">
+                        <div class="spotlight-card rounded-2xl p-5">
+                            <button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between text-left font-display font-bold text-sm sm:text-base text-white">
+                                <span>Do I have to pay monthly commissions on WhatsApp Orders?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-electric-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden pt-3 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/80 mt-3">
+                                Zero commissions! Unlike third-party food or marketplace apps that take 15%–30% per order, your BizFlow DIGITAL WhatsApp Order Catalog sends orders straight to your business WhatsApp number (e.g., 077 769 3160) so you keep 100% of every sale.
+                            </div>
+                        </div>
+                        <div class="spotlight-card rounded-2xl p-5">
+                            <button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between text-left font-display font-bold text-sm sm:text-base text-white">
+                                <span>Can you combine a Company Website with Inventory &amp; Billing?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-electric-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden pt-3 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/80 mt-3">
+                                Yes! All BizFlow DIGITAL modules are built modularly. You can start with a public Company Website and seamlessly connect a staff-only Inventory Portal and POS Billing / Invoice Generator under one unified brand ecosystem.
+                            </div>
+                        </div>
+                        <div class="spotlight-card rounded-2xl p-5">
+                            <button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between text-left font-display font-bold text-sm sm:text-base text-white">
+                                <span>How fast can we get started and receive a quote?</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-electric-500 transition-transform"></i>
+                            </button>
+                            <div class="faq-answer hidden pt-3 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/80 mt-3">
+                                Immediately. Message us on WhatsApp at <strong>077 769 3160</strong> or email <strong>gishankweerasinghe@gmail.com</strong>—or use our interactive Project Estimator right below to send your selected modules in one click.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE PROJECT ESTIMATOR & DIRECT CONTACT HUB -->
+        <section id="contact-hub" class="py-20 lg:py-28 bg-navy-850/75 border-t border-electric-500/15">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    
+                    <!-- Direct Contact Channels -->
+                    <div class="lg:col-span-5 space-y-6 reveal">
+                        <span class="text-xs font-grotesk font-bold tracking-[0.22em] text-electric-500 uppercase">
+                            DIRECT CONTACT HUB
+                        </span>
+                        <h2 class="font-grotesk font-bold text-3xl sm:text-4xl text-white leading-tight">
+                            Start Your Project with BizFlow DIGITAL
+                        </h2>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Reach out directly via WhatsApp, voice call, or email—or select your desired systems on the right to generate an instant project brief.
+                        </p>
+
+                        <div class="space-y-3">
+                            <a href="https://wa.me/94777693160?text=Hello%20BizFlow%20DIGITAL%2C%20I%20would%20like%20to%20start%20a%20project." target="_blank" rel="noopener noreferrer" class="spotlight-card p-4 rounded-2xl flex items-center justify-between group border-emerald-500/35">
+                                <div class="flex items-center gap-3.5 relative z-10">
+                                    <div class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center">
+                                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-emerald-400 font-semibold">WhatsApp Direct (Fastest Response)</div>
+                                        <div class="font-grotesk font-bold text-base text-white">077 769 3160</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-emerald-400 relative z-10"></i>
+                            </a>
+
+                            <a href="tel:+94777693160" class="spotlight-card p-4 rounded-2xl flex items-center justify-between group">
+                                <div class="flex items-center gap-3.5 relative z-10">
+                                    <div class="w-11 h-11 rounded-xl bg-electric-500/15 text-electric-500 flex items-center justify-center">
+                                        <i data-lucide="phone-call" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-400">Direct Call</div>
+                                        <div class="font-grotesk font-bold text-base text-white group-hover:text-electric-400 transition-colors">077 769 3160</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-400 group-hover:text-electric-400 relative z-10"></i>
+                            </a>
+
+                            <a href="mailto:gishankweerasinghe@gmail.com" class="spotlight-card p-4 rounded-2xl flex items-center justify-between group">
+                                <div class="flex items-center gap-3.5 relative z-10">
+                                    <div class="w-11 h-11 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-400">Official Email</div>
+                                        <div class="font-semibold text-sm text-white group-hover:text-electric-400 transition-colors break-all">gishankweerasinghe@gmail.com</div>
+                                    </div>
+                                </div>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-400 group-hover:text-electric-400 relative z-10"></i>
+                            </a>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-navy-800 to-navy-950 border border-electric-500/40 rounded-2xl p-6">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-electric-500">Estimated Delivery Turnaround</span>
+                                <i data-lucide="timer" class="w-4 h-4 text-electric-500"></i>
+                            </div>
+                            <div id="est-turnaround" class="font-grotesk font-bold text-2xl sm:text-3xl text-white">
+                                4 – 6 Business Days
+                            </div>
+                            <p id="est-scope-detail" class="text-xs text-slate-400 mt-1.5">
+                                1 solution selected • Custom built &amp; cloud deployed
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Project Builder Form -->
+                    <div class="lg:col-span-7 reveal">
+                        <div class="spotlight-card rounded-3xl p-6 sm:p-8 border border-electric-500/35">
+                            <div class="relative z-10 space-y-6">
+                                <div>
+                                    <label class="block font-display font-bold text-sm text-white mb-3">
+                                        1. Select the Solutions You Need
+                                    </label>
+                                    <div class="flex flex-wrap gap-2" id="service-pills-container">
+                                        <button type="button" data-service="Business & Informational Websites" data-days="5" class="service-pill active px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-electric-500/20 border-electric-500 text-electric-400">
+                                            ✓ Business &amp; Informational Websites
+                                        </button>
+                                        <button type="button" data-service="Professional Portfolios" data-days="4" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + Professional Portfolios
+                                        </button>
+                                        <button type="button" data-service="Appointment & Booking Portals" data-days="6" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + Appointment &amp; Booking Portals
+                                        </button>
+                                        <button type="button" data-service="Real Estate & Vehicle Directories" data-days="8" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + Real Estate &amp; Vehicle Directories
+                                        </button>
+                                        <button type="button" data-service="Staff & Inventory Portals" data-days="9" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + Staff &amp; Inventory Portals
+                                        </button>
+                                        <button type="button" data-service="Quotation & Invoice Generators" data-days="5" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + Quotation &amp; Invoice Generators
+                                        </button>
+                                        <button type="button" data-service="WhatsApp Order Catalogs" data-days="4" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + WhatsApp Order Catalogs
+                                        </button>
+                                        <button type="button" data-service="Digital Business Cards & Event Sites" data-days="3" class="service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50">
+                                            + Digital Business Cards &amp; Event Sites
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="inq-name" class="block text-xs font-semibold text-slate-300 mb-1.5">Your Name / Company *</label>
+                                        <input type="text" id="inq-name" placeholder="e.g., Apex Holdings (Pvt) Ltd" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-sm text-white placeholder-slate-500 focus:border-electric-500 focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label for="inq-phone" class="block text-xs font-semibold text-slate-300 mb-1.5">Your Phone / WhatsApp</label>
+                                        <input type="text" id="inq-phone" placeholder="e.g., 077 123 4567" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-sm text-white placeholder-slate-500 focus:border-electric-500 focus:outline-none">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="inq-details" class="block text-xs font-semibold text-slate-300 mb-1.5">Project Requirements</label>
+                                    <textarea id="inq-details" rows="3" placeholder="Tell us about your products, stock items, billing needs, or website vision..." class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-sm text-white placeholder-slate-500 focus:border-electric-500 focus:outline-none"></textarea>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                                    <button type="button" onclick="dispatchInquiry('whatsapp')" class="btn-whatsapp text-navy-950 font-display font-extrabold text-sm py-4 px-5 rounded-2xl flex items-center justify-center gap-2">
+                                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                        <span>Send Proposal via WhatsApp</span>
+                                    </button>
+                                    <button type="button" onclick="dispatchInquiry('email')" class="btn-electric text-navy-950 font-display font-extrabold text-sm py-4 px-5 rounded-2xl flex items-center justify-center gap-2">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                        <span>Send Proposal via Email</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================================================
+         VIEW 2: SUBPAGE 1 — COMPANY WEBSITES & CORPORATE PORTALS STUDIO (#subpage-websites)
+    ========================================================================== -->
+    <section id="view-subpage-websites" class="view-section relative z-10 py-10 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <!-- Subpage Top Breadcrumb & Action Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-electric-500/20">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <button type="button" onclick="navigateTo('home')" class="hover:text-electric-500 inline-flex items-center gap-1">
+                            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Main Site
+                        </button>
+                        <span>/</span>
+                        <span class="text-electric-400 font-semibold">Company Websites Studio</span>
+                    </div>
+                    <h1 class="font-grotesk font-bold text-3xl sm:text-4xl text-white">
+                        Company Websites &amp; Corporate Portals Sandbox
+                    </h1>
+                    <p class="text-sm text-slate-300 max-w-2xl">
+                        Customize a live interactive company website below. Switch industries, edit the brand headline in real time, toggle Light/Dark modes, and preview Desktop vs. Mobile responsiveness.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-3 shrink-0">
+                    <a href="https://wa.me/94777693160?text=Hi%20BizFlow%20DIGITAL%2C%20I%20tested%20your%20Company%20Websites%20Sandbox%20and%20want%20a%20similar%20website!" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-navy-950 font-display font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl inline-flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>Order Similar Website</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Live Website Customizer Controls -->
+            <div class="spotlight-card rounded-3xl p-5 sm:p-6 border border-electric-500/30">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-end relative z-10">
+                    <!-- Industry Template Selector -->
+                    <div class="lg:col-span-4">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-electric-400 mb-2">1. Select Industry Template</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" onclick="setWebTemplate('corporate')" id="wtpl-corporate" class="wtpl-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-electric-500 text-navy-950 transition-all">Corporate</button>
+                            <button type="button" onclick="setWebTemplate('hospitality')" id="wtpl-hospitality" class="wtpl-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-navy-950 border border-slate-700 text-slate-300 hover:border-electric-500 transition-all">Villa &amp; Hotel</button>
+                            <button type="button" onclick="setWebTemplate('realestate')" id="wtpl-realestate" class="wtpl-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-navy-950 border border-slate-700 text-slate-300 hover:border-electric-500 transition-all">Real Estate</button>
+                        </div>
+                    </div>
+
+                    <!-- Live Brand Name & Headline Editor -->
+                    <div class="lg:col-span-4">
+                        <label for="ws-brand-input" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">2. Type Your Company Name</label>
+                        <input type="text" id="ws-brand-input" value="NEXUS GLOBAL HOLDINGS" oninput="updateWebPreviewText()" class="w-full px-4 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs sm:text-sm text-white focus:border-electric-500 focus:outline-none">
+                    </div>
+
+                    <!-- Theme & Viewport Toggles -->
+                    <div class="lg:col-span-4 flex flex-wrap sm:flex-nowrap gap-2">
+                        <button type="button" onclick="toggleWebPreviewTheme()" id="ws-theme-btn" class="flex-1 py-2.5 px-3 rounded-xl bg-navy-950 border border-electric-500/30 text-xs font-bold text-white inline-flex items-center justify-center gap-1.5 hover:border-electric-500">
+                            <i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
+                            <span id="ws-theme-label">Switch to Light Mode</span>
+                        </button>
+                        <button type="button" onclick="toggleWebPreviewViewport()" id="ws-vp-btn" class="py-2.5 px-3.5 rounded-xl bg-navy-950 border border-electric-500/30 text-xs font-bold text-electric-400 inline-flex items-center justify-center gap-1.5 hover:border-electric-500">
+                            <i data-lucide="smartphone" class="w-4 h-4"></i>
+                            <span id="ws-vp-label">Mobile View</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulated Live Browser Frame -->
+            <div class="flex justify-center">
+                <div id="ws-browser-frame" class="w-full transition-all duration-500 rounded-3xl overflow-hidden border-2 border-electric-500/40 shadow-[0_25px_70px_rgba(0,0,0,0.85)] bg-slate-950">
+                    <!-- Browser Top Chrome -->
+                    <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                        </div>
+                        <div class="flex-1 max-w-md bg-slate-950 rounded-lg px-3 py-1 text-[11px] font-mono text-slate-400 flex items-center justify-between border border-slate-800">
+                            <span id="ws-url-bar">https://www.nexusglobal.lk</span>
+                            <i data-lucide="lock" class="w-3 h-3 text-emerald-400"></i>
+                        </div>
+                        <span class="text-[10px] font-mono text-electric-400 hidden sm:inline">LIVE INTERACTIVE PREVIEW</span>
+                    </div>
+
+                    <!-- Simulated Website Canvas -->
+                    <div id="ws-site-canvas" class="bg-slate-950 text-white transition-colors duration-300">
+                        <!-- Simulated Navbar -->
+                        <div id="ws-site-nav" class="px-6 py-4 border-b border-slate-800/80 flex items-center justify-between">
+                            <div class="font-grotesk font-bold text-base sm:text-lg tracking-tight flex items-center gap-2">
+                                <span id="ws-accent-dot" class="w-3 h-3 rounded-full bg-electric-500"></span>
+                                <span id="ws-site-brand">NEXUS GLOBAL HOLDINGS</span>
+                            </div>
+                            <div class="hidden sm:flex items-center gap-5 text-xs opacity-80">
+                                <span>About</span>
+                                <span>Services</span>
+                                <span>Projects</span>
+                                <span id="ws-nav-cta" class="px-3.5 py-1.5 rounded-lg bg-electric-500 text-navy-950 font-bold opacity-100">Contact Us</span>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Hero Banner -->
+                        <div class="p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="lg:col-span-7 space-y-4">
+                                <span id="ws-site-badge" class="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-electric-500/15 text-electric-400">
+                                    Enterprise Consulting &amp; Logistics
+                                </span>
+                                <h2 id="ws-site-headline" class="font-grotesk font-bold text-2xl sm:text-4xl leading-tight">
+                                    Engineering Supply Chains &amp; Corporate Excellence Across Asia
+                                </h2>
+                                <p id="ws-site-sub" class="text-xs sm:text-sm opacity-80 leading-relaxed">
+                                    Delivering end-to-end corporate strategy, customs logistics, and modern enterprise infrastructure with 24/7 client transparency.
+                                </p>
+                                <div class="flex flex-wrap gap-3 pt-2">
+                                    <button type="button" onclick="triggerPreviewLeadToast()" id="ws-primary-btn" class="px-5 py-2.5 rounded-xl bg-electric-500 text-navy-950 font-bold text-xs shadow-lg">
+                                        Request Corporate Profile
+                                    </button>
+                                    <span class="px-4 py-2.5 rounded-xl border border-current/20 text-xs font-semibold opacity-85">
+                                        Call: 077 769 3160
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Simulated Interactive Inquiry Card Inside Preview -->
+                            <div class="lg:col-span-5">
+                                <div id="ws-form-box" class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                                    <div class="font-display font-bold text-sm">Instant Client Inquiry</div>
+                                    <input type="text" placeholder="Your Full Name" class="w-full px-3 py-2 rounded-lg bg-slate-950/70 border border-slate-700 text-xs focus:outline-none">
+                                    <input type="text" placeholder="Phone / WhatsApp Number" class="w-full px-3 py-2 rounded-lg bg-slate-950/70 border border-slate-700 text-xs focus:outline-none">
+                                    <button type="button" onclick="triggerPreviewLeadToast()" id="ws-submit-btn" class="w-full py-2.5 rounded-lg bg-electric-500 text-navy-950 font-bold text-xs">
+                                        Send Inquiry Now
+                                    </button>
+                                    <div id="ws-lead-feedback" class="hidden text-[11px] text-emerald-400 font-semibold text-center pt-1">
+                                        ✓ Demo Lead Captured! In production, this routes directly to your Email &amp; WhatsApp.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Simulated 3-Column Highlights -->
+                        <div class="px-6 sm:px-10 pb-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-xl border border-current/10 bg-current/5">
+                                <div id="ws-feat1-title" class="font-bold text-sm mb-1">ISO Certified Operations</div>
+                                <div id="ws-feat1-desc" class="text-xs opacity-75">Trusted by 140+ regional enterprises and export partners.</div>
+                            </div>
+                            <div class="p-4 rounded-xl border border-current/10 bg-current/5">
+                                <div id="ws-feat2-title" class="font-bold text-sm mb-1">24/7 Client Portal</div>
+                                <div id="ws-feat2-desc" class="text-xs opacity-75">Real-time documentation, tracking, and direct account managers.</div>
+                            </div>
+                            <div class="p-4 rounded-xl border border-current/10 bg-current/5">
+                                <div id="ws-feat3-title" class="font-bold text-sm mb-1">Rapid Islandwide Reach</div>
+                                <div id="ws-feat3-desc" class="text-xs opacity-75">Colombo headquarters with regional distribution hubs.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Deliverables Strip -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="spotlight-card rounded-2xl p-6">
+                    <h3 class="font-display font-bold text-base text-white mb-2">Sub-Second Page Speed</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">Clean semantic code and optimized assets guarantee lightning-fast loading on 4G mobile networks.</p>
+                </div>
+                <div class="spotlight-card rounded-2xl p-6">
+                    <h3 class="font-display font-bold text-base text-white mb-2">Google SEO &amp; Maps Ready</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">Structured meta tags, OpenGraph social cards, and Google Business Profile integration out of the box.</p>
+                </div>
+                <div class="spotlight-card rounded-2xl p-6">
+                    <h3 class="font-display font-bold text-base text-white mb-2">WhatsApp &amp; Email Routing</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">Every inquiry button connects directly to your WhatsApp (077 769 3160) and email inbox.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 3: SUBPAGE 2 — INVENTORY & STOCK MANAGEMENT SYSTEM SANDBOX (#subpage-inventory)
+    ========================================================================== -->
+    <section id="view-subpage-inventory" class="view-section relative z-10 py-10 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            
+            <!-- Subpage Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-blue-500/25">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <button type="button" onclick="navigateTo('home')" class="hover:text-electric-500 inline-flex items-center gap-1">
+                            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Main Site
+                        </button>
+                        <span>/</span>
+                        <span class="text-blue-400 font-semibold">Inventory &amp; Stock Management System</span>
+                    </div>
+                    <h1 class="font-grotesk font-bold text-3xl sm:text-4xl text-white">
+                        Live Stock, Warehouse &amp; Staff Inventory Sandbox
+                    </h1>
+                    <p class="text-sm text-slate-300 max-w-2xl">
+                        Test a real-time inventory control system. Add new products, adjust stock levels with <code class="text-electric-400">+1</code> / <code class="text-electric-400">-1</code> controls, trigger automatic low-stock alerts, and inspect the live audit log.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-3 shrink-0">
+                    <button type="button" onclick="exportInventoryCSV()" class="px-4 py-3 rounded-xl bg-navy-800 hover:bg-navy-700 border border-blue-500/35 text-xs font-bold text-blue-300 inline-flex items-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        <span>Export CSV</span>
+                    </button>
+                    <a href="https://wa.me/94777693160?text=Hi%20BizFlow%20DIGITAL%2C%20I%20tested%20your%20Inventory%20Management%20Sandbox%20and%20want%20a%20custom%20system%20for%20my%20business." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-navy-950 font-display font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl inline-flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>Deploy Custom Inventory System</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Live Inventory KPI Strip -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="spotlight-card rounded-2xl p-5">
+                    <div class="text-xs text-slate-400">Total Active SKUs</div>
+                    <div id="inv-kpi-skus" class="font-grotesk font-bold text-2xl sm:text-3xl text-white mt-1">5</div>
+                    <div class="text-[11px] text-blue-400 mt-1">Across 3 Warehouses</div>
+                </div>
+                <div class="spotlight-card rounded-2xl p-5">
+                    <div class="text-xs text-slate-400">Total Stock Units</div>
+                    <div id="inv-kpi-units" class="font-grotesk font-bold text-2xl sm:text-3xl text-electric-500 mt-1">142</div>
+                    <div class="text-[11px] text-emerald-400 mt-1">Live Synced Count</div>
+                </div>
+                <div class="spotlight-card rounded-2xl p-5">
+                    <div class="text-xs text-slate-400">Total Valuation (LKR)</div>
+                    <div id="inv-kpi-value" class="font-grotesk font-bold text-2xl sm:text-3xl text-white mt-1">LKR 1,245,000</div>
+                    <div class="text-[11px] text-slate-400 mt-1">At Cost / Unit Price</div>
+                </div>
+                <div class="spotlight-card rounded-2xl p-5 border-amber-500/35">
+                    <div class="text-xs text-amber-400 font-semibold">Low / Out-of-Stock Alerts</div>
+                    <div id="inv-kpi-alerts" class="font-grotesk font-bold text-2xl sm:text-3xl text-amber-400 mt-1">2</div>
+                    <div class="text-[11px] text-slate-400 mt-1">Auto-Reorder Triggered</div>
+                </div>
+            </div>
+
+            <!-- Main Inventory Workspace: Stock Table + Add Product & Audit Log -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left 8 Cols: Search, Filters & Live Stock Table -->
+                <div class="lg:col-span-8 spotlight-card rounded-3xl p-6 border border-blue-500/30 space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
+                        <div class="relative flex-1">
+                            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                            <input type="text" id="inv-search" oninput="renderInventoryTable()" placeholder="Search by SKU or product name..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs sm:text-sm text-white focus:border-electric-500 focus:outline-none">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <select id="inv-cat-filter" onchange="renderInventoryTable()" class="px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                                <option value="ALL">All Categories</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="POS Hardware">POS Hardware</option>
+                                <option value="Accessories">Accessories</option>
+                            </select>
+                            <button type="button" onclick="toggleLowStockFilter()" id="inv-low-filter-btn" class="px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs font-bold text-amber-400 hover:border-amber-400 transition-all">
+                                Low Stock Only
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Responsive Table -->
+                    <div class="overflow-x-auto relative z-10">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-[11px] font-grotesk uppercase tracking-wider text-slate-400">
+                                    <th class="py-3 px-2">SKU</th>
+                                    <th class="py-3 px-2">Item &amp; Category</th>
+                                    <th class="py-3 px-2">Unit Price</th>
+                                    <th class="py-3 px-2 text-center">Stock Qty</th>
+                                    <th class="py-3 px-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table-body" class="divide-y divide-slate-800/70 text-xs sm:text-sm">
+                                <!-- Dynamically populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right 4 Cols: Add New Stock Item + Real-Time Audit Log -->
+                <div class="lg:col-span-4 space-y-6">
+                    <!-- Add New SKU Form -->
+                    <div class="spotlight-card rounded-3xl p-6 border border-electric-500/30 space-y-4">
+                        <h3 class="font-display font-bold text-base text-white flex items-center gap-2 relative z-10">
+                            <i data-lucide="plus-circle" class="w-4 h-4 text-electric-500"></i>
+                            <span>Add New Product SKU</span>
+                        </h3>
+                        <div class="space-y-3 relative z-10">
+                            <input type="text" id="new-sku-name" placeholder="Product Name (e.g., Barcode Scanner X2)" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                            <div class="grid grid-cols-2 gap-2.5">
+                                <input type="text" id="new-sku-code" placeholder="SKU (e.g., POS-109)" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                                <select id="new-sku-cat" class="w-full px-3 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="POS Hardware">POS Hardware</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1">Price (LKR)</label>
+                                    <input type="number" id="new-sku-price" value="12500" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1">Initial Qty</label>
+                                    <input type="number" id="new-sku-qty" value="18" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1">Alert Min</label>
+                                    <input type="number" id="new-sku-min" value="5" class="w-full px-3 py-2 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-electric-500 focus:outline-none">
+                                </div>
+                            </div>
+                            <button type="button" onclick="addNewInventoryItem()" class="w-full btn-electric text-navy-950 font-display font-extrabold text-xs py-3 rounded-xl">
+                                + Add Item to Live Inventory
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Staff Movement & Audit Log -->
+                    <div class="spotlight-card rounded-3xl p-6 border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between relative z-10">
+                            <h3 class="font-display font-bold text-sm text-white flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span>Live Stock Audit Log</span>
+                            </h3>
+                            <span class="text-[10px] font-mono text-slate-400">STAFF SYNC</span>
+                        </div>
+                        <div id="inv-audit-log" class="space-y-2 max-h-56 overflow-y-auto text-xs relative z-10 pr-1">
+                            <!-- Audit entries rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 4: SUBPAGE 3 — POS BILLING & QUOTATION/INVOICE GENERATOR (#subpage-billing)
+    ========================================================================== -->
+    <section id="view-subpage-billing" class="view-section relative z-10 py-10 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            
+            <!-- Subpage Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-purple-500/25">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <button type="button" onclick="navigateTo('home')" class="hover:text-electric-500 inline-flex items-center gap-1">
+                            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Main Site
+                        </button>
+                        <span>/</span>
+                        <span class="text-purple-400 font-semibold">POS Billing &amp; Quotation/Invoice Suite</span>
+                    </div>
+                    <h1 class="font-grotesk font-bold text-3xl sm:text-4xl text-white">
+                        POS Billing &amp; Automated Invoice Generator Sandbox
+                    </h1>
+                    <p class="text-sm text-slate-300 max-w-2xl">
+                        Add custom line items, configure discounts &amp; taxes, switch between <strong>A4 Tax Invoice</strong> and <strong>80mm Thermal POS Receipt</strong> formats, print PDF, or dispatch via WhatsApp.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-3 shrink-0">
+                    <button type="button" onclick="window.print()" class="px-4 py-3 rounded-xl bg-navy-800 hover:bg-navy-700 border border-purple-500/40 text-xs font-bold text-purple-300 inline-flex items-center gap-2">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        <span>Print / Save PDF</span>
+                    </button>
+                    <a href="https://wa.me/94777693160?text=Hi%20BizFlow%20DIGITAL%2C%20I%20tested%20your%20POS%20Billing%20%26%20Invoice%20Sandbox%20and%20want%20one%20for%20my%20business!" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-navy-950 font-display font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl inline-flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>Get Custom Billing System</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Billing Workspace: Editor (Left) + Live Document Preview (Right) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Left 6 Cols: Bill Controls -->
+                <div class="lg:col-span-6 spotlight-card rounded-3xl p-6 border border-purple-500/30 space-y-5">
+                    <div class="relative z-10 space-y-5">
+                        <!-- Mode Switcher: A4 Invoice vs 80mm POS Receipt -->
+                        <div class="flex items-center justify-between gap-2 pb-4 border-b border-slate-800">
+                            <span class="font-display font-bold text-sm text-white">Document Format</span>
+                            <div class="inline-flex bg-navy-950 p-1 rounded-xl border border-slate-800">
+                                <button type="button" onclick="setBillingMode('a4')" id="bill-mode-a4" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-600 text-white transition-all">A4 Tax Invoice</button>
+                                <button type="button" onclick="setBillingMode('pos')" id="bill-mode-pos" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all">80mm POS Receipt</button>
+                            </div>
+                        </div>
+
+                        <!-- Customer & Document Metadata -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Customer / Business Name</label>
+                                <input type="text" id="bill-client" value="Lanka Tech Distributors" oninput="renderBillingPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-purple-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Customer Phone</label>
+                                <input type="text" id="bill-phone" value="077 889 4412" oninput="renderBillingPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-purple-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Invoice / Receipt #</label>
+                                <input type="text" id="bill-number" value="INV-2026-089" oninput="renderBillingPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs font-mono text-white focus:border-purple-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Payment Status / Method</label>
+                                <select id="bill-payment" onchange="renderBillingPreview()" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-purple-400 focus:outline-none">
+                                    <option value="PAID • CARD / ONLINE">PAID • Card / Online</option>
+                                    <option value="PAID • CASH">PAID • Cash</option>
+                                    <option value="UNPAID • QUOTATION">UNPAID • Quotation</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Quick-Add Preset Services/Products -->
+                        <div>
+                            <div class="text-xs text-slate-400 mb-2">Quick-Add Line Items:</div>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="quickAddBillItem('Corporate Website Package', 1, 55000)" class="px-3 py-1.5 rounded-lg bg-navy-950 hover:border-purple-400 border border-slate-700 text-[11px] font-semibold text-slate-200">+ Web Package (55k)</button>
+                                <button type="button" onclick="quickAddBillItem('WhatsApp Order Catalog', 1, 28000)" class="px-3 py-1.5 rounded-lg bg-navy-950 hover:border-purple-400 border border-slate-700 text-[11px] font-semibold text-slate-200">+ WhatsApp Catalog (28k)</button>
+                                <button type="button" onclick="quickAddBillItem('Cloud Hosting & SSL (1 Yr)', 1, 12000)" class="px-3 py-1.5 rounded-lg bg-navy-950 hover:border-purple-400 border border-slate-700 text-[11px] font-semibold text-slate-200">+ Cloud SSL (12k)</button>
+                            </div>
+                        </div>
+
+                        <!-- Add Custom Line Item -->
+                        <div class="bg-navy-950/90 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+                            <div class="text-xs font-bold text-white">Add Custom Line Item</div>
+                            <div class="grid grid-cols-12 gap-2">
+                                <input type="text" id="bill-new-desc" placeholder="Item description..." class="col-span-6 px-3 py-2 rounded-lg bg-navy-900 border border-slate-700 text-xs text-white focus:outline-none">
+                                <input type="number" id="bill-new-qty" value="1" min="1" class="col-span-2 px-2 py-2 rounded-lg bg-navy-900 border border-slate-700 text-xs text-white text-center focus:outline-none">
+                                <input type="number" id="bill-new-price" placeholder="Price" value="15000" class="col-span-4 px-3 py-2 rounded-lg bg-navy-900 border border-slate-700 text-xs text-white focus:outline-none">
+                            </div>
+                            <button type="button" onclick="addCustomBillItem()" class="w-full py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all">
+                                + Add Line Item to Bill
+                            </button>
+                        </div>
+
+                        <!-- Active Line Items List -->
+                        <div id="bill-editor-items" class="space-y-2 max-h-44 overflow-y-auto pr-1">
+                            <!-- Rendered dynamically -->
+                        </div>
+
+                        <!-- Discount & Tax Controls -->
+                        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Discount (%)</label>
+                                <input type="number" id="bill-discount" value="5" min="0" max="100" oninput="renderBillingPreview()" class="w-full px-3.5 py-2 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Tax / VAT (%)</label>
+                                <input type="number" id="bill-tax" value="0" min="0" max="50" oninput="renderBillingPreview()" class="w-full px-3.5 py-2 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right 6 Cols: Live Printable Invoice / POS Receipt Preview -->
+                <div class="lg:col-span-6 flex flex-col items-center space-y-4">
+                    <div id="printable-invoice-area" class="w-full transition-all duration-300 bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl border-t-8 border-electric-500">
+                        <!-- Dynamically rendered A4 or 80mm POS receipt -->
+                    </div>
+
+                    <a id="bill-whatsapp-share" href="https://wa.me/94777693160" target="_blank" rel="noopener noreferrer" class="w-full btn-whatsapp text-navy-950 font-display font-extrabold text-xs sm:text-sm py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span>Send Formatted Invoice Summary via WhatsApp</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 5: SUBPAGE 4 — WHATSAPP ORDER CATALOG & BOOKING PORTAL (#subpage-commerce)
+    ========================================================================== -->
+    <section id="view-subpage-commerce" class="view-section relative z-10 py-10 lg:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+            
+            <!-- Subpage Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-emerald-500/25">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <button type="button" onclick="navigateTo('home')" class="hover:text-electric-500 inline-flex items-center gap-1">
+                            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Main Site
+                        </button>
+                        <span>/</span>
+                        <span class="text-emerald-400 font-semibold">WhatsApp Storefront &amp; Booking Portal</span>
+                    </div>
+                    <h1 class="font-grotesk font-bold text-3xl sm:text-4xl text-white">
+                        WhatsApp Order Catalog &amp; 24/7 Booking Sandbox
+                    </h1>
+                    <p class="text-sm text-slate-300 max-w-2xl">
+                        Test how your customers browse products and send zero-commission WhatsApp orders, or book appointments directly into your schedule.
+                    </p>
+                </div>
+                <a href="https://wa.me/94777693160?text=Hi%20BizFlow%20DIGITAL%2C%20I%20want%20to%20build%20a%20WhatsApp%20Order%20Catalog%20or%20Booking%20Portal!" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-navy-950 font-display font-extrabold text-xs sm:text-sm px-5 py-3 rounded-xl inline-flex items-center gap-2 shrink-0">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Launch My WhatsApp Store</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left 7 Cols: WhatsApp Order Storefront Demo -->
+                <div class="lg:col-span-7 spotlight-card rounded-3xl p-6 border border-emerald-500/30 space-y-5">
+                    <div class="flex items-center justify-between relative z-10">
+                        <h2 class="font-display font-bold text-xl text-white flex items-center gap-2">
+                            <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-400"></i>
+                            <span>1. Zero-Commission WhatsApp Storefront</span>
+                        </h2>
+                        <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400">0% Fees</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+                        <div class="bg-navy-950/90 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between gap-3">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-electric-400">Web Solution</span>
+                                <div class="font-bold text-sm text-white mt-0.5">Business Website Starter</div>
+                                <div class="text-emerald-400 font-grotesk font-bold text-base mt-1">LKR 35,000</div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+                                <span class="text-xs text-slate-400">Quantity:</span>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="updateCommerceCart('starter', -1)" class="w-7 h-7 rounded-lg bg-navy-800 text-white font-bold">-</button>
+                                    <span id="com-qty-starter" class="w-5 text-center text-xs font-bold">1</span>
+                                    <button type="button" onclick="updateCommerceCart('starter', 1)" class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-navy-950/90 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between gap-3">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-purple-400">Automation</span>
+                                <div class="font-bold text-sm text-white mt-0.5">POS &amp; Invoice Module</div>
+                                <div class="text-emerald-400 font-grotesk font-bold text-base mt-1">LKR 25,000</div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+                                <span class="text-xs text-slate-400">Quantity:</span>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="updateCommerceCart('pos', -1)" class="w-7 h-7 rounded-lg bg-navy-800 text-white font-bold">-</button>
+                                    <span id="com-qty-pos" class="w-5 text-center text-xs font-bold">1</span>
+                                    <button type="button" onclick="updateCommerceCart('pos', 1)" class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 relative z-10">
+                        <input type="text" id="com-customer-name" value="Nuwan Perera" oninput="renderCommerceWhatsApp()" placeholder="Customer Name" class="px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:outline-none">
+                        <input type="text" id="com-delivery-addr" value="Colombo 03 / Online Delivery" oninput="renderCommerceWhatsApp()" placeholder="Delivery City / Note" class="px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:outline-none">
+                    </div>
+
+                    <div class="bg-[#0B141A] rounded-2xl p-4 border border-emerald-500/30 relative z-10">
+                        <div class="text-[11px] font-bold text-emerald-400 mb-2">Generated WhatsApp Order Payload (Target: 077 769 3160):</div>
+                        <pre id="com-wa-preview" class="text-xs font-mono text-slate-200 whitespace-pre-wrap bg-[#111B21] p-3 rounded-xl border border-slate-800"></pre>
+                        <a id="com-wa-send-btn" href="https://wa.me/94777693160" target="_blank" rel="noopener noreferrer" class="mt-3 w-full btn-whatsapp text-navy-950 font-display font-extrabold text-xs py-3 rounded-xl flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span>Checkout &amp; Send Order to WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right 5 Cols: Real-Time Appointment Booking Portal -->
+                <div class="lg:col-span-5 spotlight-card rounded-3xl p-6 border border-electric-500/30 space-y-5">
+                    <div class="relative z-10 space-y-5">
+                        <h2 class="font-display font-bold text-xl text-white flex items-center gap-2">
+                            <i data-lucide="calendar-check" class="w-5 h-5 text-electric-500"></i>
+                            <span>2. Smart Appointment Portal</span>
+                        </h2>
+                        <p class="text-xs text-slate-300">Select a consultation type, date, and open time slot:</p>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1.5">Consultation Topic</label>
+                            <select id="bk-service-select" onchange="updateBookingTicket()" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:outline-none">
+                                <option value="Custom Website & Branding">Custom Website &amp; Branding</option>
+                                <option value="Inventory & POS Billing System">Inventory &amp; POS Billing System</option>
+                                <option value="WhatsApp Commerce Storefront">WhatsApp Commerce Storefront</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" onclick="selectBkDate('Tomorrow')" class="bk-d-btn px-3.5 py-2 rounded-xl bg-electric-500 text-navy-950 font-bold text-xs">Tomorrow</button>
+                            <button type="button" onclick="selectBkDate('Thursday')" class="bk-d-btn px-3.5 py-2 rounded-xl bg-navy-950 border border-slate-700 text-slate-300 font-bold text-xs">Thursday</button>
+                            <button type="button" onclick="selectBkDate('Saturday')" class="bk-d-btn px-3.5 py-2 rounded-xl bg-navy-950 border border-slate-700 text-slate-300 font-bold text-xs">Saturday</button>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <button type="button" onclick="selectBkTime('10:00 AM')" class="py-2.5 px-3 rounded-xl bg-navy-950 border border-electric-500/30 hover:border-electric-500 text-xs font-bold text-white">10:00 AM</button>
+                            <button type="button" onclick="selectBkTime('11:30 AM')" class="py-2.5 px-3 rounded-xl bg-electric-500/20 border border-electric-500 text-xs font-bold text-electric-400">11:30 AM</button>
+                            <button type="button" onclick="selectBkTime('03:00 PM')" class="py-2.5 px-3 rounded-xl bg-navy-950 border border-electric-500/30 hover:border-electric-500 text-xs font-bold text-white">03:00 PM</button>
+                            <button type="button" onclick="selectBkTime('05:30 PM')" class="py-2.5 px-3 rounded-xl bg-navy-950 border border-electric-500/30 hover:border-electric-500 text-xs font-bold text-white">05:30 PM</button>
+                        </div>
+
+                        <div class="bg-navy-950/90 p-5 rounded-2xl border border-electric-500/35 text-center space-y-2.5">
+                            <div class="text-[11px] uppercase tracking-wider text-emerald-400 font-bold">Instant Booking Ticket</div>
+                            <div id="bk-ticket-service" class="text-xs text-slate-300">Custom Website &amp; Branding</div>
+                            <div id="bk-ticket-slot" class="font-grotesk font-bold text-lg text-white">Tomorrow at 11:30 AM</div>
+                            <a id="bk-ticket-wa" href="https://wa.me/94777693160" target="_blank" rel="noopener noreferrer" class="mt-2 w-full btn-electric text-navy-950 font-display font-extrabold text-xs py-3 rounded-xl inline-flex items-center justify-center gap-2">
+                                <span>Lock Slot via WhatsApp</span>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         GLOBAL FOOTER
+    ========================================================================== -->
+    <footer class="bg-navy-950 border-t border-electric-500/15 pt-14 pb-24 sm:pb-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800/80 items-start">
+                
+                <!-- Brand Info -->
+                <div class="space-y-3">
+                    <button type="button" onclick="navigateTo('home')" class="flex items-center gap-3 text-left">
+                        <div class="w-10 h-10">
+                            <svg viewBox="0 0 120 120" class="w-full h-full animate-pulse-glow" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M88 26C79 18 67 14 55 15C30 17 12 39 15 64C16 74 21 83 28 89" stroke="#00E5FF" stroke-width="9" stroke-linecap="round"/>
+                                <path d="M35 97C45 103 57 106 69 104C93 100 109 77 104 53C102 45 99 39 94 33" stroke="#0077FF" stroke-width="9" stroke-linecap="round"/>
+                                <path d="M42 32H65C71 32 75 36 75 41C75 46 71 49 66 50H48V88" stroke="#38BDF8" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M48 64H76" stroke="#00E5FF" stroke-width="7.5" stroke-linecap="round"/>
+                                <path d="M26 89C44 74 66 54 91 29" stroke="#00E5FF" stroke-width="9.5" stroke-linecap="round"/>
+                                <path d="M73 25L96 24L93 47L73 25Z" fill="#67E8F9"/>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col leading-none">
+                            <span class="font-grotesk font-bold text-xl text-white">BizFlow</span>
+                            <span class="font-display font-bold text-[10px] tracking-[0.3em] text-electric-500 mt-1">DIGITAL</span>
+                        </div>
+                    </button>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Accelerate Your Digital Growth with custom company websites, stock inventory portals, POS billing systems, and WhatsApp commerce catalogs.
+                    </p>
+                </div>
+
+                <!-- Interactive Subpages -->
+                <div class="space-y-2 text-xs text-slate-300">
+                    <div class="font-grotesk font-bold text-sm text-white uppercase tracking-wider mb-2">Interactive Sandboxes</div>
+                    <div><button type="button" onclick="navigateTo('subpage-websites')" class="hover:text-electric-500 transition-colors">Company Websites Studio</button></div>
+                    <div><button type="button" onclick="navigateTo('subpage-inventory')" class="hover:text-electric-500 transition-colors">Inventory &amp; Stock System</button></div>
+                    <div><button type="button" onclick="navigateTo('subpage-billing')" class="hover:text-electric-500 transition-colors">POS Billing &amp; Invoice Suite</button></div>
+                    <div><button type="button" onclick="navigateTo('subpage-commerce')" class="hover:text-electric-500 transition-colors">WhatsApp Store &amp; Bookings</button></div>
+                </div>
+
+                <!-- Direct Contact Details -->
+                <div class="space-y-2.5 text-xs text-slate-300">
+                    <div class="font-grotesk font-bold text-sm text-white uppercase tracking-wider mb-2">Direct Contact</div>
+                    <div>
+                        <a href="mailto:gishankweerasinghe@gmail.com" class="hover:text-electric-500 transition-colors inline-flex items-center gap-2 break-all">
+                            <i data-lucide="mail" class="w-4 h-4 text-electric-500 shrink-0"></i>
+                            <span>gishankweerasinghe@gmail.com</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="tel:+94777693160" class="hover:text-electric-500 transition-colors inline-flex items-center gap-2">
+                            <i data-lucide="phone" class="w-4 h-4 text-electric-500 shrink-0"></i>
+                            <span>077 769 3160</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://wa.me/94777693160" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 transition-colors inline-flex items-center gap-2 font-semibold">
+                            <i data-lucide="message-circle" class="w-4 h-4 shrink-0"></i>
+                            <span>WhatsApp: +94 77 769 3160</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Web & Social -->
+                <div class="space-y-2.5 text-xs text-slate-300">
+                    <div class="font-grotesk font-bold text-sm text-white uppercase tracking-wider mb-2">Online &amp; Social</div>
+                    <div>
+                        <a href="https://www.bizflowdigital.work.gd " target="_blank" rel="noopener noreferrer" class="hover:text-electric-500 transition-colors inline-flex items-center gap-2">
+                            <i data-lucide="globe" class="w-4 h-4 text-electric-500"></i>
+                            <span>www.bizflowdigital.work.gd </span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://facebook.com/BizFlowDigital" target="_blank" rel="noopener noreferrer" class="hover:text-electric-500 transition-colors inline-flex items-center gap-2">
+                            <i data-lucide="at-sign" class="w-4 h-4 text-electric-500"></i>
+                            <span>@BizFlowDigital</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
+                <p>&copy; <span id="year-now"></span> BizFlow DIGITAL. All rights reserved.</p>
+                <p>Web &amp; Digital Solutions • Engineered for Speed &amp; Growth</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         FLOATING LIVE WHATSAPP CHAT DRAWER
+    ========================================================================== -->
+    <div class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+        <div id="wa-chat-drawer" class="hidden w-80 sm:w-88 rounded-3xl bg-navy-900/95 backdrop-blur-xl border border-emerald-500/40 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 p-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-white">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="font-display font-bold text-sm text-white">BizFlow DIGITAL</div>
+                        <div class="text-[11px] text-emerald-100 flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping"></span> Online • 077 769 3160
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="toggleWaDrawer()" class="text-white/80 hover:text-white p-1" aria-label="Close WhatsApp Drawer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-4 space-y-3">
+                <div class="bg-navy-950/90 border border-slate-800 rounded-2xl p-3 text-xs text-slate-200 leading-relaxed">
+                    👋 Hi! Looking for a Company Website, Inventory System, POS Billing, or WhatsApp Store? Tap a quick topic or send your message:
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                    <button type="button" onclick="setQuickWaPrompt('Hi BizFlow DIGITAL, I need a quote for a Company Website.')" class="text-[10px] px-2.5 py-1 rounded-full bg-navy-800 hover:border-emerald-400 border border-slate-700 text-slate-200">Company Website</button>
+                    <button type="button" onclick="setQuickWaPrompt('Hi BizFlow DIGITAL, I need an Inventory & POS Billing system.')" class="text-[10px] px-2.5 py-1 rounded-full bg-navy-800 hover:border-emerald-400 border border-slate-700 text-slate-200">Inventory &amp; POS</button>
+                    <button type="button" onclick="setQuickWaPrompt('Hi BizFlow DIGITAL, I want a WhatsApp Order Catalog.')" class="text-[10px] px-2.5 py-1 rounded-full bg-navy-800 hover:border-emerald-400 border border-slate-700 text-slate-200">WhatsApp Catalog</button>
+                </div>
+                <textarea id="quick-wa-msg" rows="2" class="w-full px-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-700 text-xs text-white focus:border-emerald-400 focus:outline-none">Hi BizFlow DIGITAL, I'd like to discuss a digital solution for my business!</textarea>
+                <button type="button" onclick="sendQuickWhatsApp()" class="w-full btn-whatsapp text-navy-950 font-display font-extrabold text-xs py-3 rounded-xl flex items-center justify-center gap-2">
+                    <span>Chat on WhatsApp Now</span>
+                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="button" onclick="toggleWaDrawer()" aria-label="Open WhatsApp Chat" class="flex items-center gap-2.5 px-4 py-3.5 rounded-full btn-whatsapp text-navy-950 font-display font-extrabold text-xs sm:text-sm shadow-2xl">
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+            </span>
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+            <span class="hidden sm:inline">WhatsApp Us</span>
+        </button>
+    </div>
+
+    <!-- Custom Confirmation Modal (No alert()) -->
+    <div id="dispatch-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-navy-950/85 backdrop-blur-md p-4">
+        <div class="spotlight-card max-w-md w-full rounded-3xl p-7 border border-electric-500/50 text-center space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-electric-500/20 text-electric-500 flex items-center justify-center mx-auto">
+                <i data-lucide="check-circle-2" class="w-8 h-8"></i>
+            </div>
+            <h3 id="dispatch-modal-title" class="font-grotesk font-bold text-2xl text-white">Action Complete</h3>
+            <p id="dispatch-modal-body" class="text-sm text-slate-300 leading-relaxed"></p>
+            <button type="button" onclick="closeDispatchModal()" class="w-full btn-electric text-navy-950 font-display font-extrabold text-sm py-3.5 rounded-xl">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         JAVASCRIPT ENGINE (SPA ROUTER + 4 INTERACTIVE SUBPAGE SANDBOXES)
+    ========================================================================== -->
+    <script>
+        lucide.createIcons();
+        document.getElementById('year-now').textContent = new Date().getFullYear();
+
+        // ------------------------------------------
+        // 1. MULTI-VIEW SPA ROUTER & HASH SYNC
+        // ------------------------------------------
+        const validViews = ['home', 'subpage-websites', 'subpage-inventory', 'subpage-billing', 'subpage-commerce'];
+
+        function navigateTo(viewId, updateHash = true) {
+            if (!validViews.includes(viewId)) viewId = 'home';
+
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active-view'));
+            const target = document.getElementById(`view-${viewId}`);
+            if (target) target.classList.add('active-view');
+
+            // Update Subpage Pill Bar Highlights
+            document.querySelectorAll('.subpage-pill').forEach(pill => {
+                if (pill.dataset.pill === viewId) {
+                    pill.className = 'subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-electric-500 text-navy-950';
+                } else {
+                    pill.className = 'subpage-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all bg-navy-800 text-slate-300 border border-electric-500/20 hover:border-electric-500 inline-flex items-center gap-1.5';
+                }
+            });
+
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            if (updateHash) {
+                history.replaceState(null, '', `#${viewId}`);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
+        }
+
+        function jumpToHomeSection(sectionId) {
+            navigateTo('home', false);
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 60);
+        }
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (validViews.includes(hash)) navigateTo(hash, false);
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash.replace('#', '');
+            if (validViews.includes(initialHash)) {
+                navigateTo(initialHash, false);
+            }
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ------------------------------------------
+        // 2. PARTICLE CONSTELLATION & SPOTLIGHT FX
+        // ------------------------------------------
+        const canvas = document.getElementById('constellation-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            const count = Math.min(65, Math.floor((canvas.width * canvas.height) / 20000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    size: Math.random() * 1.8 + 0.8
+                });
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 125) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 229, 255, ${0.14 * (1 - dist / 125)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animateCanvas();
+
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.spotlight-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            });
+        });
+
+        // Scroll Reveal & KPI Counters
+        let countersDone = false;
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    if (!countersDone && entry.target.querySelector('.counter')) {
+                        countersDone = true;
+                        document.querySelectorAll('.counter').forEach(c => {
+                            const target = +c.dataset.target;
+                            let cur = 0;
+                            const timer = setInterval(() => {
+                                cur += Math.ceil(target / 40);
+                                if (cur >= target) {
+                                    c.textContent = target;
+                                    clearInterval(timer);
+                                } else {
+                                    c.textContent = cur;
+                                }
+                            }, 30);
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ------------------------------------------
+        // 3. HOME PAGE INTERACTIONS (HERO, PRICING, FAQ, ESTIMATOR)
+        // ------------------------------------------
+        const heroTelemetry = {
+            growth: { k1L: 'Lead Conversion Lift', k1V: '+248.5%', k2L: 'WhatsApp Orders', k2V: '1,490 / mo', title: 'Digital Pipeline Velocity' },
+            inventory: { k1L: 'Stock Accuracy Rate', k1V: '99.94%', k2L: 'Low-Stock Alerts', k2V: 'Auto-Synced', title: 'Multi-Warehouse SKU Flow' },
+            billing: { k1L: 'Invoice Generation', k1V: '2.4 Sec', k2L: 'POS & A4 Formats', k2V: '100% Ready', title: 'Automated Billing Throughput' }
+        };
+
+        function switchHeroView(key) {
+            document.querySelectorAll('.hero-view-btn').forEach(b => {
+                b.className = 'hero-view-btn px-2.5 py-1 rounded-lg text-[11px] font-bold text-slate-400 hover:text-white transition-all';
+            });
+            document.getElementById(`hero-btn-${key}`).className = 'hero-view-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-electric-500 text-navy-950 transition-all';
+            const d = heroTelemetry[key];
+            document.getElementById('hero-kpi1-label').textContent = d.k1L;
+            document.getElementById('hero-kpi1-val').textContent = d.k1V;
+            document.getElementById('hero-kpi2-label').textContent = d.k2L;
+            document.getElementById('hero-kpi2-val').textContent = d.k2V;
+            document.getElementById('hero-chart-title').textContent = d.title;
+        }
+
+        function toggleFaq(btn) {
+            const ans = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            ans.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Estimator Pills & Proposal Dispatcher
+        const servicePills = document.querySelectorAll('.service-pill');
+        function updateEstimator() {
+            const active = Array.from(servicePills).filter(p => p.classList.contains('active'));
+            const tEl = document.getElementById('est-turnaround');
+            const dEl = document.getElementById('est-scope-detail');
+            if (active.length === 0) {
+                tEl.textContent = 'Select a Solution';
+                dEl.textContent = 'Tap one or more service pills to estimate turnaround';
+                return;
+            }
+            let days = 0;
+            active.forEach(p => days += parseInt(p.dataset.days, 10));
+            const minD = Math.max(3, Math.round(days * 0.8));
+            tEl.textContent = `${minD} – ${minD + 2} Business Days`;
+            dEl.textContent = `${active.length} solution${active.length > 1 ? 's' : ''} selected • Custom built & cloud deployed`;
+        }
+
+        servicePills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const isAct = pill.classList.toggle('active');
+                const name = pill.dataset.service;
+                if (isAct) {
+                    pill.className = 'service-pill active px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-electric-500/20 border-electric-500 text-electric-400';
+                    pill.textContent = `✓ ${name}`;
+                } else {
+                    pill.className = 'service-pill px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all bg-navy-950/90 border-slate-700 text-slate-300 hover:border-electric-500/50';
+                    pill.textContent = `+ ${name}`;
+                }
+                updateEstimator();
+            });
+        });
+
+        function addToEstimator(serviceName) {
+            servicePills.forEach(p => {
+                if (p.dataset.service === serviceName && !p.classList.contains('active')) p.click();
+            });
+            jumpToHomeSection('contact-hub');
+        }
+
+        function dispatchInquiry(channel) {
+            const activeServices = Array.from(servicePills).filter(p => p.classList.contains('active')).map(p => p.dataset.service);
+            const name = document.getElementById('inq-name').value.trim() || 'Prospective Client';
+            const phone = document.getElementById('inq-phone').value.trim() || 'Not provided';
+            const details = document.getElementById('inq-details').value.trim() || 'Interested in custom digital solutions.';
+            const listStr = activeServices.length ? activeServices.join(', ') : 'General Consultation';
+
+            if (channel === 'whatsapp') {
+                const msg = `*NEW PROJECT INQUIRY — BIZFLOW DIGITAL*\n*Name/Business:* ${name}\n*Contact:* ${phone}\n*Solutions:* ${listStr}\n*Details:* ${details}`;
+                window.open(`https://wa.me/94777693160?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+                showDispatchModal('Opening WhatsApp Chat!', `Your project brief for ${listStr} is ready to send to BizFlow DIGITAL (077 769 3160).`);
+            } else {
+                const subj = `Project Inquiry: ${listStr} — ${name}`;
+                const body = `Hello BizFlow DIGITAL,\n\nI would like a proposal for:\n• Solutions: ${listStr}\n• Name/Business: ${name}\n• Phone: ${phone}\n\nDetails:\n${details}`;
+                window.location.href = `mailto:gishankweerasinghe@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+                showDispatchModal('Opening Email Client!', `Your inquiry to gishankweerasinghe@gmail.com has been formatted.`);
+            }
+        }
+
+        // ------------------------------------------
+        // 4. SUBPAGE 1: COMPANY WEBSITES STUDIO LOGIC
+        // ------------------------------------------
+        const webTemplates = {
+            corporate: {
+                defaultBrand: 'NEXUS GLOBAL HOLDINGS',
+                url: 'https://www.nexusglobal.lk',
+                badge: 'Enterprise Consulting & Logistics',
+                headline: 'Engineering Supply Chains & Corporate Excellence Across Asia',
+                sub: 'Delivering end-to-end corporate strategy, customs logistics, and modern enterprise infrastructure with 24/7 client transparency.',
+                cta: 'Request Corporate Profile',
+                f1T: 'ISO Certified Operations', f1D: 'Trusted by 140+ regional enterprises and export partners.',
+                f2T: '24/7 Client Portal', f2D: 'Real-time documentation, tracking, and direct account managers.',
+                f3T: 'Rapid Islandwide Reach', f3D: 'Colombo headquarters with regional distribution hubs.'
+            },
+            hospitality: {
+                defaultBrand: 'SERENDIB OCEAN VILLAS',
+                url: 'https://www.serendibvillas.lk',
+                badge: 'Boutique Coastal Sanctuary • Sri Lanka',
+                headline: 'Private Oceanfront Suites & Curated Island Escapes',
+                sub: 'Experience barefoot luxury on the southern coast with private infinity pools, sunset dining, and instant direct WhatsApp reservations.',
+                cta: 'Check Suite Availability',
+                f1T: 'Direct Best-Rate Guarantee', f1D: 'Zero OTA booking fees when reserving directly through our portal.',
+                f2T: 'Private Airport Transfers', f2D: 'Seamless chauffeur pickup from Bandaranaike International Airport.',
+                f3T: 'Curated Excursions', f3D: 'Whale watching, tea estate tours, and private coastal dining.'
+            },
+            realestate: {
+                defaultBrand: 'CRESTLINE REALTY & AUTO',
+                url: 'https://www.crestlinerealty.lk',
+                badge: 'Verified Properties & Luxury Vehicles',
+                headline: 'Discover Prime Residencies, Commercial Lands & Certified Imports',
+                sub: 'Browse verified listings with transparent valuations, instant bank loan calculators, and direct viewing appointments.',
+                cta: 'Browse Verified Listings',
+                f1T: '100% Title Verified', f1D: 'Every property and vehicle undergoes strict legal & technical inspection.',
+                f2T: 'Smart Price & Area Filters', f2D: 'Filter by district, budget, land perches, or vehicle model year.',
+                f3T: 'Instant Viewing Schedule', f3D: 'Book on-site inspections directly via WhatsApp in one tap.'
+            }
+        };
+
+        let currentWebTpl = 'corporate';
+        let webPreviewLight = false;
+        let webPreviewMobile = false;
+
+        function setWebTemplate(tplKey) {
+            currentWebTpl = tplKey;
+            document.querySelectorAll('.wtpl-btn').forEach(b => {
+                b.className = 'wtpl-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-navy-950 border border-slate-700 text-slate-300 hover:border-electric-500 transition-all';
+            });
+            document.getElementById(`wtpl-${tplKey}`).className = 'wtpl-btn py-2.5 px-2 rounded-xl text-xs font-bold bg-electric-500 text-navy-950 transition-all';
+
+            const d = webTemplates[tplKey];
+            document.getElementById('ws-brand-input').value = d.defaultBrand;
+            document.getElementById('ws-site-brand').textContent = d.defaultBrand;
+            document.getElementById('ws-url-bar').textContent = d.url;
+            document.getElementById('ws-site-badge').textContent = d.badge;
+            document.getElementById('ws-site-headline').textContent = d.headline;
+            document.getElementById('ws-site-sub').textContent = d.sub;
+            document.getElementById('ws-primary-btn').textContent = d.cta;
+            document.getElementById('ws-feat1-title').textContent = d.f1T;
+            document.getElementById('ws-feat1-desc').textContent = d.f1D;
+            document.getElementById('ws-feat2-title').textContent = d.f2T;
+            document.getElementById('ws-feat2-desc').textContent = d.f2D;
+            document.getElementById('ws-feat3-title').textContent = d.f3T;
+            document.getElementById('ws-feat3-desc').textContent = d.f3D;
+            document.getElementById('ws-lead-feedback').classList.add('hidden');
+        }
+
+        function updateWebPreviewText() {
+            const val = document.getElementById('ws-brand-input').value.trim() || 'YOUR BRAND';
+            document.getElementById('ws-site-brand').textContent = val;
+        }
+
+        function toggleWebPreviewTheme() {
+            webPreviewLight = !webPreviewLight;
+            const canvasEl = document.getElementById('ws-site-canvas');
+            const formBox = document.getElementById('ws-form-box');
+            const label = document.getElementById('ws-theme-label');
+
+            if (webPreviewLight) {
+                canvasEl.classList.remove('bg-slate-950', 'text-white');
+                canvasEl.classList.add('bg-slate-50', 'text-slate-900');
+                formBox.classList.remove('bg-slate-900/90', 'border-slate-800');
+                formBox.classList.add('bg-white', 'border-slate-200', 'shadow-xl');
+                label.textContent = 'Switch to Dark Mode';
+            } else {
+                canvasEl.classList.remove('bg-slate-50', 'text-slate-900');
+                canvasEl.classList.add('bg-slate-950', 'text-white');
+                formBox.classList.remove('bg-white', 'border-slate-200', 'shadow-xl');
+                formBox.classList.add('bg-slate-900/90', 'border-slate-800');
+                label.textContent = 'Switch to Light Mode';
+            }
+        }
+
+        function toggleWebPreviewViewport() {
+            webPreviewMobile = !webPreviewMobile;
+            const frame = document.getElementById('ws-browser-frame');
+            const label = document.getElementById('ws-vp-label');
+            if (webPreviewMobile) {
+                frame.classList.remove('w-full');
+                frame.classList.add('max-w-sm');
+                label.textContent = 'Desktop View';
+            } else {
+                frame.classList.remove('max-w-sm');
+                frame.classList.add('w-full');
+                label.textContent = 'Mobile View';
+            }
+        }
+
+        function triggerPreviewLeadToast() {
+            document.getElementById('ws-lead-feedback').classList.remove('hidden');
+        }
+
+        // ------------------------------------------
+        // 5. SUBPAGE 2: INVENTORY & STOCK SYSTEM LOGIC
+        // ------------------------------------------
+        let inventoryItems = [
+            { sku: 'POS-101', name: 'Thermal Receipt Printer 80mm', category: 'POS Hardware', price: 24500, qty: 18, min: 6 },
+            { sku: 'ELC-204', name: 'Wireless 2D Barcode Scanner', category: 'POS Hardware', price: 14800, qty: 4, min: 8 },
+            { sku: 'ACC-309', name: 'NFC Smart Business Card (Matte)', category: 'Accessories', price: 3500, qty: 85, min: 20 },
+            { sku: 'ELC-412', name: 'Dual-Screen Android POS Terminal', category: 'Electronics', price: 89000, qty: 3, min: 5 },
+            { sku: 'ACC-518', name: 'Heavy-Duty Cash Drawer 5-Slot', category: 'POS Hardware', price: 16500, qty: 32, min: 10 }
+        ];
+        let showLowStockOnly = false;
+        let auditLogs = [
+            'System initialized • 5 active SKUs synced across warehouses.',
+            'Alert: ELC-204 (Wireless 2D Barcode Scanner) is below reorder level (4/8).'
+        ];
+
+        function logInventoryEvent(text) {
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            auditLogs.unshift(`[${now}] ${text}`);
+            renderAuditLog();
+        }
+
+        function renderAuditLog() {
+            const container = document.getElementById('inv-audit-log');
+            container.innerHTML = auditLogs.map(entry => `
+                <div class="p-2.5 rounded-xl bg-navy-950/90 border border-slate-800/90 text-slate-300 font-mono text-[11px] leading-snug">
+                    ${entry}
+                </div>
+            `).join('');
+        }
+
+        function toggleLowStockFilter() {
+            showLowStockOnly = !showLowStockOnly;
+            const btn = document.getElementById('inv-low-filter-btn');
+            if (showLowStockOnly) {
+                btn.classList.add('bg-amber-500/20', 'border-amber-400');
+            } else {
+                btn.classList.remove('bg-amber-500/20', 'border-amber-400');
+            }
+            renderInventoryTable();
+        }
+
+        function adjustStock(sku, delta) {
+            const item = inventoryItems.find(i => i.sku === sku);
+            if (!item) return;
+            const oldQty = item.qty;
+            item.qty = Math.max(0, item.qty + delta);
+            if (oldQty !== item.qty) {
+                logInventoryEvent(`${delta > 0 ? 'Stock IN (+1)' : 'Stock OUT (-1)'}: ${item.sku} (${item.name}) → Now ${item.qty} units`);
+                renderInventoryTable();
+            }
+        }
+
+        function addNewInventoryItem() {
+            const name = document.getElementById('new-sku-name').value.trim();
+            const sku = document.getElementById('new-sku-code').value.trim().toUpperCase() || `SKU-${Math.floor(100 + Math.random() * 899)}`;
+            const category = document.getElementById('new-sku-cat').value;
+            const price = Math.max(0, parseFloat(document.getElementById('new-sku-price').value) || 0);
+            const qty = Math.max(0, parseInt(document.getElementById('new-sku-qty').value, 10) || 0);
+            const min = Math.max(1, parseInt(document.getElementById('new-sku-min').value, 10) || 5);
+
+            if (!name) return;
+            inventoryItems.unshift({ sku, name, category, price, qty, min });
+            document.getElementById('new-sku-name').value = '';
+            document.getElementById('new-sku-code').value = '';
+            logInventoryEvent(`Added SKU ${sku}: ${name} (${qty} units @ LKR ${price.toLocaleString()})`);
+            renderInventoryTable();
+        }
+
+        function renderInventoryTable() {
+            const query = (document.getElementById('inv-search')?.value || '').toLowerCase();
+            const cat = document.getElementById('inv-cat-filter')?.value || 'ALL';
+
+            // Update KPIs from full dataset
+            let totalUnits = 0;
+            let totalVal = 0;
+            let alertCount = 0;
+            inventoryItems.forEach(item => {
+                totalUnits += item.qty;
+                totalVal += item.qty * item.price;
+                if (item.qty <= item.min) alertCount++;
+            });
+
+            document.getElementById('inv-kpi-skus').textContent = inventoryItems.length;
+            document.getElementById('inv-kpi-units').textContent = totalUnits.toLocaleString();
+            document.getElementById('inv-kpi-value').textContent = `LKR ${totalVal.toLocaleString()}`;
+            document.getElementById('inv-kpi-alerts').textContent = alertCount;
+
+            const filtered = inventoryItems.filter(item => {
+                const matchSearch = item.name.toLowerCase().includes(query) || item.sku.toLowerCase().includes(query);
+                const matchCat = cat === 'ALL' || item.category === cat;
+                const matchLow = !showLowStockOnly || item.qty <= item.min;
+                return matchSearch && matchCat && matchLow;
+            });
+
+            const tbody = document.getElementById('inventory-table-body');
+            tbody.innerHTML = filtered.map(item => {
+                let badge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">In Stock</span>`;
+                if (item.qty === 0) {
+                    badge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">Out of Stock</span>`;
+                } else if (item.qty <= item.min) {
+                    badge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">Low Stock (Min ${item.min})</span>`;
+                }
+
+                return `
+                    <tr class="hover:bg-navy-800/40 transition-colors">
+                        <td class="py-3.5 px-2 font-mono text-xs text-electric-400 font-bold">${item.sku}</td>
+                        <td class="py-3.5 px-2">
+                            <div class="font-semibold text-white">${item.name}</div>
+                            <div class="text-[11px] text-slate-400">${item.category}</div>
+                        </td>
+                        <td class="py-3.5 px-2 font-mono text-xs text-slate-200">LKR ${item.price.toLocaleString()}</td>
+                        <td class="py-3.5 px-2">
+                            <div class="flex items-center justify-center gap-2">
+                                <button type="button" onclick="adjustStock('${item.sku}', -1)" class="w-7 h-7 rounded-lg bg-navy-950 hover:bg-rose-500/20 border border-slate-700 text-xs font-bold text-white">-1</button>
+                                <span class="w-8 text-center font-grotesk font-bold text-white">${item.qty}</span>
+                                <button type="button" onclick="adjustStock('${item.sku}', 1)" class="w-7 h-7 rounded-lg bg-navy-950 hover:bg-emerald-500/20 border border-slate-700 text-xs font-bold text-electric-400">+1</button>
+                            </div>
+                        </td>
+                        <td class="py-3.5 px-2">${badge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function exportInventoryCSV() {
+            const rows = [['SKU', 'Product Name', 'Category', 'Unit Price (LKR)', 'Quantity', 'Reorder Level']];
+            inventoryItems.forEach(i => rows.push([i.sku, `"${i.name}"`, i.category, i.price, i.qty, i.min]));
+            const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+            const link = document.createElement('a');
+            link.setAttribute('href', encodeURI(csvContent));
+            link.setAttribute('download', 'BizFlow_Inventory_Report.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            logInventoryEvent('Exported full inventory CSV report.');
+        }
+
+        renderInventoryTable();
+        renderAuditLog();
+
+        // ------------------------------------------
+        // 6. SUBPAGE 3: POS BILLING & INVOICE GENERATOR LOGIC
+        // ------------------------------------------
+        let billingMode = 'a4'; // 'a4' or 'pos'
+        let billItems = [
+            { id: 1, desc: 'Custom Corporate Website & Portal', qty: 1, price: 65000 },
+            { id: 2, desc: 'WhatsApp Order Catalog Module', qty: 1, price: 25000 }
+        ];
+
+        function setBillingMode(mode) {
+            billingMode = mode;
+            document.getElementById('bill-mode-a4').className = mode === 'a4'
+                ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-600 text-white transition-all'
+                : 'px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all';
+            document.getElementById('bill-mode-pos').className = mode === 'pos'
+                ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-purple-600 text-white transition-all'
+                : 'px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all';
+            renderBillingPreview();
+        }
+
+        function quickAddBillItem(desc, qty, price) {
+            billItems.push({ id: Date.now() + Math.random(), desc, qty, price });
+            renderBillingPreview();
+        }
+
+        function addCustomBillItem() {
+            const desc = document.getElementById('bill-new-desc').value.trim();
+            const qty = Math.max(1, parseInt(document.getElementById('bill-new-qty').value, 10) || 1);
+            const price = Math.max(0, parseFloat(document.getElementById('bill-new-price').value) || 0);
+            if (!desc) return;
+            billItems.push({ id: Date.now(), desc, qty, price });
+            document.getElementById('bill-new-desc').value = '';
+            renderBillingPreview();
+        }
+
+        function removeBillItem(id) {
+            billItems = billItems.filter(i => i.id !== id);
+            renderBillingPreview();
+        }
+
+        function renderBillingPreview() {
+            const client = document.getElementById('bill-client').value || 'Walk-in Customer';
+            const phone = document.getElementById('bill-phone').value || '';
+            const invNo = document.getElementById('bill-number').value || 'INV-001';
+            const payment = document.getElementById('bill-payment').value;
+            const discPct = Math.max(0, parseFloat(document.getElementById('bill-discount').value) || 0);
+            const taxPct = Math.max(0, parseFloat(document.getElementById('bill-tax').value) || 0);
+
+            // Render editor list
+            const editorContainer = document.getElementById('bill-editor-items');
+            editorContainer.innerHTML = billItems.map(item => `
+                <div class="flex items-center justify-between bg-navy-950/90 px-3.5 py-2 rounded-xl border border-slate-800 text-xs">
+                    <div class="truncate pr-2">
+                        <span class="font-bold text-white">${item.qty}x</span> <span class="text-slate-300">${item.desc}</span>
+                    </div>
+                    <div class="flex items-center gap-3 shrink-0">
+                        <span class="font-mono text-purple-300">LKR ${(item.qty * item.price).toLocaleString()}</span>
+                        <button type="button" onclick="removeBillItem(${item.id})" class="text-rose-400 hover:text-rose-300 font-bold">✕</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const subtotal = billItems.reduce((sum, i) => sum + (i.qty * i.price), 0);
+            const discountAmt = Math.round(subtotal * (discPct / 100));
+            const afterDiscount = subtotal - discountAmt;
+            const taxAmt = Math.round(afterDiscount * (taxPct / 100));
+            const grandTotal = afterDiscount + taxAmt;
+            const todayStr = new Date().toLocaleDateString();
+
+            const previewBox = document.getElementById('printable-invoice-area');
+
+            if (billingMode === 'a4') {
+                previewBox.className = 'w-full transition-all duration-300 bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl border-t-8 border-electric-500';
+                previewBox.innerHTML = `
+                    <div class="flex flex-wrap justify-between items-start gap-4 border-b border-slate-200 pb-5 mb-5">
+                        <div>
+                            <div class="font-grotesk font-bold text-2xl text-slate-950">BizFlow <span class="text-blue-600">DIGITAL</span></div>
+                            <div class="text-xs text-slate-500 mt-1">Web &amp; Digital Solutions • www.bizflowdigital.work.gd </div>
+                            <div class="text-xs text-slate-500">Tel / WhatsApp: 077 769 3160 • gishankweerasinghe@gmail.com</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-grotesk font-bold text-lg text-slate-900">${invNo}</div>
+                            <div class="text-xs text-slate-500">Date: ${todayStr}</div>
+                            <span class="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">${payment}</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Billed To</div>
+                        <div class="font-bold text-base text-slate-900">${client}</div>
+                        ${phone ? `<div class="text-xs text-slate-600">Contact: ${phone}</div>` : ''}
+                    </div>
+
+                    <table class="w-full text-left border-collapse text-xs mb-5">
+                        <thead>
+                            <tr class="border-b-2 border-slate-200 text-slate-500 uppercase">
+                                <th class="py-2">Description</th>
+                                <th class="py-2 text-center">Qty</th>
+                                <th class="py-2 text-right">Rate</th>
+                                <th class="py-2 text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            ${billItems.map(i => `
+                                <tr>
+                                    <td class="py-2.5 font-medium text-slate-800">${i.desc}</td>
+                                    <td class="py-2.5 text-center">${i.qty}</td>
+                                    <td class="py-2.5 text-right font-mono">${i.price.toLocaleString()}</td>
+                                    <td class="py-2.5 text-right font-mono font-semibold">${(i.qty * i.price).toLocaleString()}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                    <div class="border-t border-slate-200 pt-4 space-y-1.5 text-xs max-w-xs ml-auto">
+                        <div class="flex justify-between text-slate-600">
+                            <span>Subtotal:</span>
+                            <span class="font-mono">LKR ${subtotal.toLocaleString()}</span>
+                        </div>
+                        ${discPct > 0 ? `
+                        <div class="flex justify-between text-emerald-700">
+                            <span>Discount (${discPct}%):</span>
+                            <span class="font-mono">- LKR ${discountAmt.toLocaleString()}</span>
+                        </div>` : ''}
+                        ${taxPct > 0 ? `
+                        <div class="flex justify-between text-slate-600">
+                            <span>Tax / VAT (${taxPct}%):</span>
+                            <span class="font-mono">+ LKR ${taxAmt.toLocaleString()}</span>
+                        </div>` : ''}
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-300 font-grotesk font-bold text-base text-blue-700">
+                            <span>Grand Total:</span>
+                            <span>LKR ${grandTotal.toLocaleString()}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // 80mm Thermal POS Receipt Mode
+                previewBox.className = 'max-w-xs w-full transition-all duration-300 bg-white text-slate-900 rounded-xl p-5 shadow-2xl font-mono text-xs border-t-4 border-dashed border-slate-400';
+                previewBox.innerHTML = `
+                    <div class="text-center border-b border-dashed border-slate-400 pb-3 mb-3">
+                        <div class="font-bold text-base">BIZFLOW DIGITAL</div>
+                        <div class="text-[11px]">Tel: 077 769 3160</div>
+                        <div class="text-[10px] text-slate-500">${todayStr} • ${invNo}</div>
+                    </div>
+                    <div class="mb-3 text-[11px]">
+                        <div>Customer: <strong>${client}</strong></div>
+                        <div>Status: ${payment}</div>
+                    </div>
+                    <div class="border-t border-b border-dashed border-slate-400 py-2 space-y-1.5 mb-3">
+                        ${billItems.map(i => `
+                            <div>
+                                <div class="font-semibold">${i.desc}</div>
+                                <div class="flex justify-between text-[11px] text-slate-600">
+                                    <span>${i.qty} x ${i.price.toLocaleString()}</span>
+                                    <span class="font-bold text-slate-900">${(i.qty * i.price).toLocaleString()}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="space-y-1 text-[11px]">
+                        <div class="flex justify-between"><span>SUBTOTAL:</span><span>LKR ${subtotal.toLocaleString()}</span></div>
+                        ${discPct > 0 ? `<div class="flex justify-between"><span>DISCOUNT (${discPct}%):</span><span>-${discountAmt.toLocaleString()}</span></div>` : ''}
+                        ${taxPct > 0 ? `<div class="flex justify-between"><span>TAX (${taxPct}%):</span><span>+${taxAmt.toLocaleString()}</span></div>` : ''}
+                        <div class="flex justify-between font-bold text-sm pt-2 border-t border-dashed border-slate-400">
+                            <span>TOTAL DUE:</span>
+                            <span>LKR ${grandTotal.toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <div class="text-center text-[10px] text-slate-500 mt-4 pt-2 border-t border-dashed border-slate-300">
+                        Thank you for choosing BizFlow DIGITAL!
+                    </div>
+                `;
+            }
+
+            // Update WhatsApp Share Link
+            const waInvoiceText = [
+                `*INVOICE ${invNo} — BIZFLOW DIGITAL*`,
+                `Client: ${client}`,
+                ...billItems.map(i => `• ${i.qty}x ${i.desc}: LKR ${(i.qty * i.price).toLocaleString()}`),
+                `*Grand Total:* LKR ${grandTotal.toLocaleString()} (${payment})`
+            ].join('\n');
+            document.getElementById('bill-whatsapp-share').href = `https://wa.me/94777693160?text=${encodeURIComponent(waInvoiceText)}`;
+        }
+
+        renderBillingPreview();
+
+        // ------------------------------------------
+        // 7. SUBPAGE 4: WHATSAPP STORE & BOOKING SANDBOX LOGIC
+        // ------------------------------------------
+        const comCart = { starter: 1, pos: 1 };
+        const comPrices = { starter: 35000, pos: 25000 };
+
+        function updateCommerceCart(key, delta) {
+            comCart[key] = Math.max(0, comCart[key] + delta);
+            document.getElementById(`com-qty-${key}`).textContent = comCart[key];
+            renderCommerceWhatsApp();
+        }
+
+        function renderCommerceWhatsApp() {
+            const cust = document.getElementById('com-customer-name')?.value || 'Customer';
+            const addr = document.getElementById('com-delivery-addr')?.value || 'Colombo';
+            const total = (comCart.starter * comPrices.starter) + (comCart.pos * comPrices.pos);
+
+            const lines = [
+                `*WHATSAPP STORE ORDER — BIZFLOW DIGITAL*`,
+                `Customer: ${cust}`,
+                `Delivery / Location: ${addr}`,
+                `----------------------------`
+            ];
+            if (comCart.starter > 0) lines.push(`• ${comCart.starter}x Business Website Starter (LKR ${(comCart.starter * comPrices.starter).toLocaleString()})`);
+            if (comCart.pos > 0) lines.push(`• ${comCart.pos}x POS & Invoice Module (LKR ${(comCart.pos * comPrices.pos).toLocaleString()})`);
+            if (total === 0) lines.push(`• (Add an item above to test order)`);
+            lines.push(`----------------------------`);
+            lines.push(`*Total Order Value:* LKR ${total.toLocaleString()}`);
+
+            const txt = lines.join('\n');
+            document.getElementById('com-wa-preview').textContent = txt;
+            document.getElementById('com-wa-send-btn').href = `https://wa.me/94777693160?text=${encodeURIComponent(txt)}`;
+        }
+        renderCommerceWhatsApp();
+
+        let bkDate = 'Tomorrow';
+        let bkTime = '11:30 AM';
+
+        function selectBkDate(d) {
+            bkDate = d;
+            document.querySelectorAll('.bk-d-btn').forEach(b => {
+                b.className = b.textContent === d
+                    ? 'bk-d-btn px-3.5 py-2 rounded-xl bg-electric-500 text-navy-950 font-bold text-xs'
+                    : 'bk-d-btn px-3.5 py-2 rounded-xl bg-navy-950 border border-slate-700 text-slate-300 font-bold text-xs';
+            });
+            updateBookingTicket();
+        }
+
+        function selectBkTime(t) {
+            bkTime = t;
+            updateBookingTicket();
+        }
+
+        function updateBookingTicket() {
+            const topic = document.getElementById('bk-service-select').value;
+            const slot = `${bkDate} at ${bkTime}`;
+            document.getElementById('bk-ticket-service').textContent = topic;
+            document.getElementById('bk-ticket-slot').textContent = slot;
+            const msg = `Hi BizFlow DIGITAL, I'd like to book a consultation for "${topic}" on ${slot}.`;
+            document.getElementById('bk-ticket-wa').href = `https://wa.me/94777693160?text=${encodeURIComponent(msg)}`;
+        }
+        updateBookingTicket();
+
+        // ------------------------------------------
+        // 8. FLOATING WHATSAPP DRAWER & MODAL HELPERS
+        // ------------------------------------------
+        function toggleWaDrawer() {
+            document.getElementById('wa-chat-drawer').classList.toggle('hidden');
+        }
+
+        function setQuickWaPrompt(text) {
+            document.getElementById('quick-wa-msg').value = text;
+        }
+
+        function sendQuickWhatsApp() {
+            const msg = document.getElementById('quick-wa-msg').value.trim() || 'Hi BizFlow DIGITAL!';
+            window.open(`https://wa.me/94777693160?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+        }
+
+        function showDispatchModal(title, body) {
+            document.getElementById('dispatch-modal-title').textContent = title;
+            document.getElementById('dispatch-modal-body').textContent = body;
+            const m = document.getElementById('dispatch-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+
+        function closeDispatchModal() {
+            const m = document.getElementById('dispatch-modal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+        }
+    
+// ===== PREMIUM MOTION LAYER =====
+(function(){
+  const b=document.body;
+  b.insertAdjacentHTML('afterbegin','<div id="scroll-progress"></div><div class="aurora"><i></i><i></i><i></i></div><div id="cursor-glow"></div>');
+  const bar=document.getElementById('scroll-progress'),glow=document.getElementById('cursor-glow'),hd=document.querySelector('header.sticky');
+  addEventListener('scroll',()=>{
+    const m=document.documentElement.scrollHeight-innerHeight;
+    bar.style.width=(m>0?scrollY/m*100:0)+'%';
+    hd&&hd.classList.toggle('scrolled',scrollY>30);
+  },{passive:true});
+  addEventListener('mousemove',e=>{glow.style.transform=`translate(${e.clientX-210}px,${e.clientY-210}px)`},{passive:true});
+
+  // Staggered reveal: delay siblings in each grid
+  document.querySelectorAll('.grid').forEach(g=>{
+    [...g.children].forEach((c,i)=>{ if(c.classList.contains('reveal')) c.style.transitionDelay=(i%4)*90+'ms'; });
+  });
+
+  // 3D tilt on cards (desktop only)
+  if(matchMedia('(hover:hover)').matches){
+    document.addEventListener('mousemove',e=>{
+      const c=e.target.closest&&e.target.closest('.spotlight-card');
+      document.querySelectorAll('.spotlight-card.tilting').forEach(x=>{ if(x!==c){x.classList.remove('tilting');x.style.transform='';} });
+      if(!c||c.offsetWidth>700) return;
+      const r=c.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+      c.classList.add('tilting');c.style.transitionDelay='0ms';
+      c.style.transform=`perspective(900px) rotateX(${(-py*6).toFixed(2)}deg) rotateY(${(px*6).toFixed(2)}deg) translateY(-6px)`;
+    },{passive:true});
+    document.addEventListener('mouseleave',()=>document.querySelectorAll('.tilting').forEach(x=>{x.style.transform='';x.classList.remove('tilting')}));
+  }
+
+  // Button ripple
+  document.addEventListener('click',e=>{
+    const t=e.target.closest('button,a.btn-electric,a.btn-whatsapp');
+    if(!t||getComputedStyle(t).position==='static') return;
+    const r=t.getBoundingClientRect(),s=Math.max(r.width,r.height),d=document.createElement('span');
+    d.className='ripple';
+    d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
+    if(getComputedStyle(t).overflow==='visible') t.style.overflow='hidden';
+    t.appendChild(d);setTimeout(()=>d.remove(),600);
+  });
+})();
+    </script>
+</body>
+</html>
